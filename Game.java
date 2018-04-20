@@ -69,7 +69,7 @@ public class Game
     public void handleHelp()
     {
         System.out.println("\"help\" for a list of commands.\n\"exits\" for a list of exits.");
-        Systme.out.println("\")
+        System.out.println("\"quit\" to quit the game");
         
     }
     public void handleLook()
@@ -112,7 +112,6 @@ public class Game
         String nameTemp = "";
         while (nameTemp.isEmpty())
         {
-            nameTemp = input.nextLine();
         }
         String typeTemp = "";
         Boolean build = true;
