@@ -2,11 +2,19 @@
 public class Map
 {
     private Room start;
+    private Room current;
     
     public Map()
     {
-        Room startVillage = new Room("Your home. You've worked the lands around here all your life");
-        start = startVillage;
+        StartVillage start = new StartVillage("You are inside your home village. " 
+        		+ "It is a very small quaint town");
+        this.start = start;
+        current = start;
+    }
+    
+    public Room getCurrent()
+    {
+    	return current;
     }
     
     public Room getStart()

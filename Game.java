@@ -8,6 +8,7 @@ public class Game
 {
     private Room currentRoom;
     private Map map;
+    private static boolean playing = true;
 
     public Game() 
     {
@@ -20,21 +21,29 @@ public class Game
         return currentRoom.getDescription();
     }
 
-    public void handleCommand(String command)
+    public void handleCommand(String command, Hero hero, Game g)
     {
         command = command.toLowerCase();
         switch (command)
         {
+        	case "stats":
+        		System.out.println("Health: " + hero.getHealth());
+        		System.out.println("Mana: " + hero.getMana());
+        		System.out.println("Strength: " + hero.getStrength());
+        		System.out.println("Agility: " + hero.getAgility());
+        		System.out.println("Intelligence: " + hero.getIntelligence());
+        		System.out.println("Charisma: " + hero.getCharisma());
+        		System.out.println("Vitality: " + hero.getVitality());
+        		break;
             case "quit":
+                playing = false;
                 System.exit(0);
+                break;
             case "help" :
                 handleHelp();
                 break;
             case "exits":
-                handleExit();
-                break;
-            case "look":
-                handleLook();
+            	g.map.getCurrent().getExits();
                 break;
             case "east":
                 if (currentRoom.getEast() != null)
@@ -69,34 +78,9 @@ public class Game
     public void handleHelp()
     {
         System.out.println("\"help\" for a list of commands.\n\"exits\" for a list of exits.");
-        System.out.println("\"quit\" to quit the game");
+        System.out.println("\"quit\" to quit the game\n\"self\" for information about your character.");
+        System.out.println("\"stats\" for character stat display.");
         
-    }
-    public void handleLook()
-    {
-        System.out.println(currentRoom.getDescription());
-    }
-
-    public void handleExit()
-    {
-
-        if (currentRoom.getEast() != null)
-        {
-            System.out.print("east ");
-        }
-        if (currentRoom.getNorth() != null)
-        {
-            System.out.print("north ");
-        }
-        if (currentRoom.getSouth() != null)
-        {
-            System.out.print("south ");
-        }
-        if (currentRoom.getWest() != null)
-        {
-            System.out.print("west ");
-        }
-        System.out.println();
     }
 
     public static void prompt() {
@@ -112,6 +96,7 @@ public class Game
         String nameTemp = "";
         while (nameTemp.isEmpty())
         {
+        	nameTemp = input.nextLine();
         }
         String typeTemp = "";
         Boolean build = true;
@@ -128,10 +113,10 @@ public class Game
         System.out.println("Type \"help\" anytime for a command list.");
         System.out.println(g.describeCurrentRoom());
         prompt();
-        while (input.hasNext()) 
+        while (playing) 
         {
             String command = input.nextLine();
-            g.handleCommand(command);
+            g.handleCommand(command, hero, g);
             prompt();
         }
     }
@@ -139,39 +124,5 @@ public class Game
     public Room getCurrentRoom()
     {
         return currentRoom;
-    }
-
-    public boolean handleDesert(String command)
-    {
-        command = command.toLowerCase();
-        String boar = "boar";
-        String meerkat = "meerkat";
-
-        if (command.equals(boar) || command.equals(meerkat))
-        {
-            System.out.println("You found them! Congradulations! This means no worries for the rest of your days!");
-            handleCommand(command);
-            return true;
-        }
-        else
-        {
-            handleCommand(command);
-        }
-        return false;
-    }
-    public boolean handleGraveyard(String command)
-    {
-        command = command.toLowerCase();
-        String poke = "poke";
-        if (command.equals(poke))
-        {
-            System.out.println("They fell on you and you died. Good job.");
-            return true;
-        }
-        else
-        {
-            handleCommand(command);
-        }
-        return false;
     }
 }
