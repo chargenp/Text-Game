@@ -8,7 +8,7 @@ public class Room
     
     public Room()
     {
-        description = "There is nothing here.";
+        description = "";
     }
     
     public Room(String description)
