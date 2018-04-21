@@ -6,6 +6,12 @@ public class StartVillage extends Room
 		super();
 	}
 	
+	public void getIntro()
+	{
+		System.out.println("You wake up early on a bright sunny day on your small farm just outside"
+				+ "\na tiny village upon leaving your bed you run into your mother, just serving breakfast.\n");
+	}
+	
 	public String getCommands()
 	{
 		String commands = "";
@@ -37,5 +43,6 @@ public class StartVillage extends Room
 			System.out.print("West ");
 		}
 		System.out.println("Blacksmith Bed");
+		System.out.println();
 	}
 }

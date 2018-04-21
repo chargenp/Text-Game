@@ -9,11 +9,16 @@ public class Game
     private Room currentRoom;
     private Map map;
     private static boolean playing = true;
+    private Boolean bsGreet = true;
+    private Dialog dialog;
+    private Scanner input;
 
     public Game() 
     {
+    	input = new Scanner(System.in);
         map = new Map();
         this.currentRoom = map.getStart();
+        dialog = new Dialog();
     }
 
     public String describeCurrentRoom() 
@@ -26,8 +31,24 @@ public class Game
         command = command.toLowerCase();
         switch (command)
         {
+        	case "inv" :
+        		hero.getInventory().displayInventory();
+        		System.out.println("Equipped: ");
+        		hero.displayEquip();
+        		System.out.println();
+        		break;
+        	case "equip":
+        		hero.equip(g);
+        		break;
     		case "blacksmith":
-    			if (getCurrentRoom() instanceof StartVillage)
+    			if (getCurrentRoom() instanceof StartVillage && bsGreet)
+    			{
+    				System.out.println(dialog.getBlacksmith());
+    				System.out.println("The blacksmith gives you a shoddy sword!\n"
+    						+ "Dont forget to equip it!\n");
+    				hero.getInventory().addItem(new Shoddy_Sword());
+    			}
+    			else if (getCurrentRoom() instanceof StartVillage)
     			{
     				((StartVillage)map.getCurrent()).blacksmith(hero, g);
     			}
@@ -36,6 +57,7 @@ public class Game
         		hero.getDescription();
         		break;
         	case "bed":
+        		if (getCurrentRoom() instanceof StartVillage);
         		System.out.println("You give up and go back to bed. The kingdom is doomed. Thanks.");
         		handleCommand("quit", hero, g);
         		break;
@@ -47,6 +69,7 @@ public class Game
         		System.out.println("Intelligence: " + hero.getIntelligence());
         		System.out.println("Charisma: " + hero.getCharisma());
         		System.out.println("Vitality: " + hero.getVitality());
+        		System.out.println();
         		break;
             case "quit":
                 playing = false;
@@ -90,9 +113,10 @@ public class Game
 
     public void handleHelp()
     {
-        System.out.println("\"help\" for a list of commands.\n\"exits\" for a list of exits.");
+        System.out.println("\"help\" for a list of commands.\n\"exits\" for a list of exits and interactions.");
         System.out.println("\"quit\" to quit the game\n\"self\" for information about your character.");
-        System.out.println("\"stats\" for character stat display.");
+        System.out.println("\"stats\" for character stat display.\n\"inv\" to display inventory and equipment.");
+        System.out.println("\"equip\" to equip items from inventory\n");
         
     }
 
@@ -103,39 +127,44 @@ public class Game
 
     public static void main(String[] args)
     {  
-        Game g = new Game();
-        Scanner input = new Scanner(System.in);
+        Game g = new Game();     
         System.out.println("What is your name?");
         String nameTemp = "";
         while (nameTemp.isEmpty())
         {
-        	nameTemp = input.nextLine();
+        	nameTemp = g.input.nextLine();
         }
         String typeTemp = "";
         Boolean build = true;
         System.out.println("What type of person are you? Strong?");
         while (build)
         {
-            typeTemp = input.nextLine();
+            typeTemp = g.input.nextLine();
             if (typeTemp.equalsIgnoreCase("strong"))
             {
                 build = false;
             }
         }     
         Hero hero = new Hero(nameTemp, typeTemp); 
-        System.out.println("Type \"help\" anytime for a command list.");
-        System.out.println(g.describeCurrentRoom());
+        System.out.println("Type \"help\" anytime for a command list.\n");
+        ((StartVillage)g.map.getCurrent()).getIntro();
+        System.out.println(g.dialog.getMother());
         prompt();
         while (playing) 
         {
-            String command = input.nextLine();
+            String command = g.input.nextLine();
             g.handleCommand(command, hero, g);
             prompt();
         }
     }
-
+    
     public Room getCurrentRoom()
     {
         return currentRoom;
+    }
+    
+    public Scanner input()
+    {
+    	return input;
     }
 }

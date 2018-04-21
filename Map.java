@@ -5,7 +5,7 @@ public class Map
     private Room current;
     
     public Map()
-    {
+    { 	
         StartVillage start = new StartVillage();
         this.start = start;
         current = start;
