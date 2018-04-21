@@ -8,7 +8,28 @@ public class Room
     
     public Room()
     {
-        description = "There is nothing here.";
+        description = "";
+    }
+    
+    public void getExits()
+    {
+    	if (east != null)
+        {
+            System.out.print("east ");
+        }
+        if (north != null)
+        {
+            System.out.print("north ");
+        }
+        if (south != null)
+        {
+            System.out.print("south ");
+        }
+        if (west != null)
+        {
+            System.out.print("west ");
+        }
+        System.out.println();
     }
     
     public Room(String description)
