@@ -6,8 +6,7 @@ public class Map
     
     public Map()
     {
-        StartVillage start = new StartVillage("You are inside your home village. " 
-        		+ "It is a very small quaint town");
+        StartVillage start = new StartVillage();
         this.start = start;
         current = start;
     }

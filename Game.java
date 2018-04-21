@@ -26,6 +26,19 @@ public class Game
         command = command.toLowerCase();
         switch (command)
         {
+    		case "blacksmith":
+    			if (getCurrentRoom() instanceof StartVillage)
+    			{
+    				((StartVillage)map.getCurrent()).blacksmith(hero, g);
+    			}
+        		break;
+        	case "self":
+        		hero.getDescription();
+        		break;
+        	case "bed":
+        		System.out.println("You give up and go back to bed. The kingdom is doomed. Thanks.");
+        		handleCommand("quit", hero, g);
+        		break;
         	case "stats":
         		System.out.println("Health: " + hero.getHealth());
         		System.out.println("Mana: " + hero.getMana());

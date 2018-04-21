@@ -1,7 +1,9 @@
 
 public class Hero
 {
+	private Item[] inventory;
     private String name;
+    private int level;
     private int health;
     private int strength;
     private int agility;
@@ -23,6 +25,12 @@ public class Hero
         }
         health = vitality * 10;
         mana = intelligence * 10;
+        level = 1;
+    }
+    
+    public void getDescription()
+    {
+    	
     }
     
     public void setMana(int mana)
@@ -94,9 +102,30 @@ public class Hero
     {
     	return charisma;
     }
+    
     public void setCharisma(int charisma)
     {
     	this.charisma = charisma;
     
+    }
+    
+    public void setLevel(int level)
+    {
+    	this.level = level;
+    }
+    
+    public int getLevel()
+    {
+    	return level;
+    }
+    
+    public Item[] getInventory()
+    {
+    	return inventory;
+    }
+    
+    public void addInventory(Item item)
+    {
+    	
     }
 }
