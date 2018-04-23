@@ -8,19 +8,14 @@ public class StartVillage extends Room
 	
 	public void getIntro()
 	{
-		System.out.println("You wake up early on a bright sunny day on your small farm just outside"
-				+ "\na tiny village upon leaving your bed you run into your mother, just serving breakfast.\n");
+		System.out.println("After completing your morning chores on the farm, you head inside to see"
+		    + "\nyour mother, who is just finishing breakfast.\n");
 	}
 	
 	public String getCommands()
 	{
 		String commands = "";
 		return commands;
-	}
-	
-	public void blacksmith(Hero hero, Game g)
-	{
-		
 	}
 	
 	@Override

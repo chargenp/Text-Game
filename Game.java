@@ -9,7 +9,7 @@ public class Game
     private Room currentRoom;
     private Map map;
     private static boolean playing = true;
-    private Boolean bsGreet = true;
+    private int bsGreet = 0;
     private Dialog dialog;
     private Scanner input;
 
@@ -17,7 +17,7 @@ public class Game
     {
     	input = new Scanner(System.in);
         map = new Map();
-        this.currentRoom = map.getStart();
+        this.currentRoom = map.getStart();  
         dialog = new Dialog();
     }
 
@@ -41,16 +41,22 @@ public class Game
         		hero.equip(g);
         		break;
     		case "blacksmith":
-    			if (getCurrentRoom() instanceof StartVillage && bsGreet)
+    		    if (getCurrentRoom() instanceof StartVillage && bsGreet == 0)
+    		    {
+    		        System.out.println(dialog.getBlacksmith());
+    		        bsGreet++;
+    		    }
+    			if (getCurrentRoom() instanceof StartVillage && bsGreet == 1)
     			{
     				System.out.println(dialog.getBlacksmith());
     				System.out.println("The blacksmith gives you a shoddy sword!\n"
     						+ "Dont forget to equip it!\n");
     				hero.getInventory().addItem(new Shoddy_Sword());
+    				bsGreet++;
     			}
-    			else if (getCurrentRoom() instanceof StartVillage)
+    			else
     			{
-    				((StartVillage)map.getCurrent()).blacksmith(hero, g);
+    			    System.out.println(dialog.getBlacksmith());
     			}
         		break;
         	case "self":
@@ -120,23 +126,47 @@ public class Game
         
     }
 
-    public static void prompt() {
+    public static void prompt() 
+    {
         System.out.print("command > ");
         System.out.flush();
     }
 
     public static void main(String[] args)
     {  
-        Game g = new Game();     
+        Game g = new Game(); 
+        System.out.println("It’s been years since there has been any adventure in the small town of "
+            + "\nPurdue. Long days and quiet nights, the same routine day in and day out. It is just a "
+            + "\nsimple mother and her child on their farm trying to make due. This is where our story begins….\n");
+        System.out.println("Are you a boy, or a girl?");
+        String gender = "";
+        boolean gen = true;
+        while (gen)
+        {
+            gender = g.input.nextLine();
+            if (gender.equalsIgnoreCase("boy"))
+            {
+                gen = false;
+            }
+            else if (gender.equalsIgnoreCase("girl"))
+            {
+                gen = false;
+            }
+            else
+            {
+                System.out.println("\nWrong input. Please type 'boy' or 'girl' without the quotes.\n");
+            }
+        }
         System.out.println("What is your name?");
         String nameTemp = "";
         while (nameTemp.isEmpty())
         {
         	nameTemp = g.input.nextLine();
         }
+        g.dialog.setCharName(nameTemp);
         String typeTemp = "";
         Boolean build = true;
-        System.out.println("What type of person are you? Strong?");
+        System.out.println("What type of person are you? Strong? Agile? Smart? Choose one.");
         while (build)
         {
             typeTemp = g.input.nextLine();
@@ -144,9 +174,21 @@ public class Game
             {
                 build = false;
             }
+            else if (typeTemp.equalsIgnoreCase("agile"))
+            {
+                build = false;
+            }
+            else if (typeTemp.equalsIgnoreCase("smart")) 
+            {   
+                build = false;
+            }
+            else
+            {
+                System.out.println("\nWrong input. Please type 'strong' 'agile' or 'smart' without the quotes.\n");
+            }
         }     
-        Hero hero = new Hero(nameTemp, typeTemp); 
-        System.out.println("Type \"help\" anytime for a command list.\n");
+        Hero hero = new Hero(nameTemp, typeTemp, gender); 
+        System.out.println("\nType \"help\" anytime for a command list.\n");
         ((StartVillage)g.map.getCurrent()).getIntro();
         System.out.println(g.dialog.getMother());
         prompt();

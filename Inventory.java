@@ -7,9 +7,10 @@ public class Inventory
 	
 	public Inventory()
 	{
-		inventory = new Item[5];
-		equipped = new Item[5];
-		size = 5;
+	    size = 20;
+		inventory = new Item[size];
+		equipped = new Item[size];
+		
 	}
 	   
     public void addItem(Item item)

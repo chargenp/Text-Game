@@ -3,6 +3,7 @@ public class Hero
 {
 	private Inventory inventory;
     private String name;
+    private String gender;
     private int level;
     private int health;
     private int strength;
@@ -12,9 +13,10 @@ public class Hero
     private int vitality;
     private int mana;
     
-    public Hero(String name, String build)
+    public Hero(String name, String build, String gender)
     {
         this.name = name;
+        this.gender = gender;
         if (build.toLowerCase().equals("strong"))
         {
         	strength = 13;
@@ -23,15 +25,32 @@ public class Hero
         	charisma = 10;
         	vitality = 12;
         }
+        if (build.toLowerCase().equals("agile"))
+        {
+            strength = 8;
+            agility = 13;
+            intelligence = 9;
+            charisma = 12;
+            vitality = 8;
+        }
+        if (build.toLowerCase().equals("smart"))
+        {
+            strength = 7;
+            agility = 8;
+            intelligence = 14;
+            charisma = 9;
+            vitality = 12;
+        }
         health = vitality * 10;
         mana = intelligence * 10;
         level = 1;
         inventory = new Inventory();
+        
     }
     
     public void getDescription()
     {
-    	
+    	System.out.println("You are a farmboy.");
     }
     
     public void setMana(int mana)
