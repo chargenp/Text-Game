@@ -37,7 +37,7 @@ public class StartVillage extends Room
 		{
 			System.out.print("West ");
 		}
-		System.out.println("Blacksmith Bed");
+		System.out.println("Blacksmith Bed Mother");
 		System.out.println();
 	}
 }

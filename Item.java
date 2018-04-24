@@ -1,6 +1,6 @@
 
 public abstract class Item 
 {
-	String description;
+	String name;
 	public abstract String getName();
 }

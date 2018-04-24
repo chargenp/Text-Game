@@ -150,7 +150,7 @@ public class Hero
     	{
     		System.out.println("Choose what to equip or \"cancel\".\n");
     		inventory.displayEquipment();
-			switch (g.input().nextLine().toLowerCase())
+			switch (g.getInput().nextLine().toLowerCase())
 			{
 				case "shoddy sword":
 					inventory.equip(new Shoddy_Sword());

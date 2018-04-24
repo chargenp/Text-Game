@@ -4,12 +4,13 @@ public class Inventory
 	private Item[] inventory;
 	private Item[] equipped;
 	private int size;
+	private final int EQUIP_SIZE = 4;
 	
 	public Inventory()
 	{
-	    size = 20;
+	    size = 5;
 		inventory = new Item[size];
-		equipped = new Item[size];
+		equipped = new Item[EQUIP_SIZE];
 		
 	}
 	   
@@ -32,7 +33,7 @@ public class Inventory
     		{
     			if (toEquip instanceof Weapon)
     			{
-    				for (int k = 0; k < size; k++)
+    				for (int k = 0; k < EQUIP_SIZE; k++)
     				{
     					if (equipped[k] == null)
     					{
@@ -62,23 +63,19 @@ public class Inventory
     
     public void displayInventory()
     {
-    	int count = 0;
     	for (int i = 0; i < size; i++)
     	{
     		if (inventory[i] != null)
     		{
     			System.out.print(inventory[i].getName() + " ");
-    			System.out.print("\n\n");
+    			
     		}
     		else
     		{
-    			count++;
+    			System.out.print("[] ");
     		}
     	}
-    	if (count == size)
-    	{
-    		System.out.println("Your inventory is empty!\n");
-    	}
+    	System.out.print("\n\n");
     }
     public boolean checkEquipment(Hero hero)
     {
@@ -119,22 +116,17 @@ public class Inventory
     
     public void displayEquipped()
     {
-    	int count = 0;
-    	for (int i = 0; i < size; i++)
+    	for (int i = 0; i < EQUIP_SIZE; i++)
     	{
     		if (equipped[i] != null)
     		{
-    			System.out.print(equipped[i].getName() + " ");
-    			System.out.print("\n\n");
+    			System.out.print(equipped[i].getName() + " ");			
     		}
     		else
     		{
-    			count++;
+    			System.out.print("[] ");
     		}
-    	}
-    	if (count == size)
-    	{
-    		System.out.println("Nothing Equipped!\n");
-    	}
+    	}	
+		System.out.print("\n\n");
     }
 }

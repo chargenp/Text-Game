@@ -1,6 +1,6 @@
 
 public abstract class Weapon extends Item
 {
-	private double dmgMulti;
+	double dmgMulti;
 	public abstract int damage(int strength);
 }

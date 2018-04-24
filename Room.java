@@ -5,10 +5,32 @@ public class Room
     private Room north;
     private Room east;
     private Room west;
+    private Monster monster;
     
     public Room()
     {
         description = "";
+    }
+    
+    public Room(String description)
+    {
+    	this.description = description;
+    }
+    
+    public Room(Monster monster, String description)
+    {
+    	this.monster = monster;
+    	this.description = description;
+    }
+    
+    public boolean hasMonster()
+    {
+    	return monster != null;
+    }
+    
+    public Monster getMonster()
+    {
+    	return this.monster;
     }
     
     public void getExits()
@@ -29,14 +51,13 @@ public class Room
         {
             System.out.print("west ");
         }
+        if (monster != null)
+        {
+        	System.out.print("fight[" + this.monster.getName() + "] ");
+        }
         System.out.println();
     }
     
-    public Room(String description)
-    {
-        this.description = description;
-    }
-
     public void setDescription(String description)
     {
         this.description = description;

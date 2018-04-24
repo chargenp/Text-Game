@@ -12,6 +12,7 @@ public class Game
     private int bsGreet = 0;
     private Dialog dialog;
     private Scanner input;
+    private boolean troll = true;
 
     public Game() 
     {
@@ -25,6 +26,13 @@ public class Game
     {
         return currentRoom.getDescription();
     }
+    
+    public void RoomEnter(Room next, Game g)
+    {
+    	currentRoom = next;
+    	g.map.setCurrent(next);
+    	System.out.println(currentRoom.getDescription());  	
+    }
 
     public void handleCommand(String command, Hero hero, Game g)
     {
@@ -37,6 +45,15 @@ public class Game
         		hero.displayEquip();
         		System.out.println();
         		break;
+        	case "fight":
+        		if (g.map.getCurrent().hasMonster())
+        		{
+        			new Combat(hero, g.map.getCurrent().getMonster(), g);
+        		}
+        		break;
+        	case "mother":
+        		System.out.println(g.dialog.getMother());
+        		break;
         	case "equip":
         		hero.equip(g);
         		break;
@@ -46,7 +63,7 @@ public class Game
     		        System.out.println(dialog.getBlacksmith());
     		        bsGreet++;
     		    }
-    			if (getCurrentRoom() instanceof StartVillage && bsGreet == 1)
+    		    else if (getCurrentRoom() instanceof StartVillage && bsGreet == 1)
     			{
     				System.out.println(dialog.getBlacksmith());
     				System.out.println("The blacksmith gives you a shoddy sword!\n"
@@ -90,25 +107,26 @@ public class Game
             case "east":
                 if (currentRoom.getEast() != null)
                 {
-                    currentRoom = currentRoom.getEast();
+                	RoomEnter(currentRoom.getEast(), g);
                 }
                 break;
             case "west": 
                 if (currentRoom.getWest() != null)
                 {
-                    currentRoom = currentRoom.getWest();
+                	RoomEnter(currentRoom.getWest(), g);
+
                 }
                 break;
             case "south":
                 if (currentRoom.getSouth() != null)
                 {
-                    currentRoom = currentRoom.getSouth();
+                	RoomEnter(currentRoom.getSouth(), g);
                 }
                 break;
             case "north":
                 if (currentRoom.getNorth() != null)
                 {
-                    currentRoom = currentRoom.getNorth();
+                	RoomEnter(currentRoom.getNorth(), g);
                 }
                 break;
             default:
@@ -205,7 +223,7 @@ public class Game
         return currentRoom;
     }
     
-    public Scanner input()
+    public Scanner getInput()
     {
     	return input;
     }

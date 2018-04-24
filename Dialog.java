@@ -43,10 +43,13 @@ public class Dialog
 	                + "\nThe blacksmith in town has travelled all over the world and always knows the news. "
 	                + "\nMaybe he could be of help.\n";
 	            motherCount++;
-	                return mother;
-            default:
-                return "Hello my dear child.";
+	            return mother;
+	        case 2:
+	        	mother = "World ending scary PH.";
+	        	motherCount++;
+	            return mother;    
 	    }
+	    return "Hello my dear child.";
 	}
 	
 	public String getBlacksmith()
@@ -54,7 +57,7 @@ public class Dialog
 	    switch(blacksmithCount)
 	    {
 	        case 0:
-	            blacksmith = String.format("Afternoon Mister.\n\n"
+	            blacksmith = "Afternoon Mister.\n\n"
 	                + "What can I do you for today, kid. Did you break your shovel again, or does your axe need sharpening?\n\n"
 	                + "No not today. I came to ask about the mysterious clouds. They seem to be heading towards the farm "
 	                + "\nand darkness is taking over the sky.\n\n"
@@ -65,9 +68,24 @@ public class Dialog
 	                + "My mother talked of a prophecy of someone who could save us.\n\n"
 	                + "Prophecy. Ha! Who in their right mind is going to do that?\n\n\n"
 	                + "This is your chance. Maybe you have a right mind and will return home to your mother and farm.\n"
-	                + "Or maybe you can keep talking to the blackmsith and start an adventure!");
-	            
+	                + "Or maybe you can keep talking to the blackmsith and start an adventure!";
+	            motherCount++;
+	            blacksmithCount++;
 	            return blacksmith;
+	        case 1:
+	        	blacksmith = "If nobody else will save her, then I will!\n\n"
+	        			+ "Kid, you’re crazy. You can’t! There is more than just clouds on that path. There are enemies you "
+	        			+ "\nwill encounter stronger than you can imagine, seas full of creatures that you have never even "
+	        			+ "\nheard of, and valleys that are so hot they can kill you in seconds.\n\n"
+	        			+ "Don’t put your limits on me. Just because you and everyone else is scared, doesn’t mean "
+	        			+ "\nI have to be. I’m going.\n\n"
+	        			+ "Well kid I can’t stop you but I won’t allow you to go out there without a weapon. Take my old sword."
+	        			+ "\nmaybe it will help you on your way. Here is a map aswell so you dont get lost. There are items you "
+	        			+ "\nwill need to help you along the way, without them you will never survive. Please take my advice "
+	        			+ "\nand stay on track. Word of advice kid, trolls aren’t always dangerous.\n";
+	        	blacksmithCount++;
+	        	setMotherCount(3);
+				return blacksmith;
             default:
                 return "Good'ay young'in.";
 	    }

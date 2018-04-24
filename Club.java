@@ -1,13 +1,13 @@
 
-public class Shoddy_Sword extends Weapon
+public class Club extends Weapon
 {
 	private double dmgMulti;
 	private String name;
 	
-	public Shoddy_Sword()
+	public Club()
 	{
-		dmgMulti = 1.25;
-		name = "[Shoddy Sword]";
+		dmgMulti = 1.5;
+		name = "[Club]";
 	}
 	
 	public int damage(int strength)
