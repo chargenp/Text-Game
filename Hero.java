@@ -12,25 +12,29 @@ public class Hero
     private int charisma;
     private int vitality;
     private int mana;
+    private Weapon weapon;
+    private int experience;
+    private int maxHealth;
     
     public Hero(String name, String build, String gender)
     {
         this.name = name;
         this.gender = gender;
+        experience = 0;
         if (build.toLowerCase().equals("strong"))
         {
         	strength = 13;
         	agility = 8;
         	intelligence = 7;
-        	charisma = 10;
+        	charisma = 13;
         	vitality = 12;
         }
         if (build.toLowerCase().equals("agile"))
         {
             strength = 8;
-            agility = 13;
+            agility = 14;
             intelligence = 9;
-            charisma = 12;
+            charisma = 10;
             vitality = 8;
         }
         if (build.toLowerCase().equals("smart"))
@@ -41,11 +45,38 @@ public class Hero
             charisma = 9;
             vitality = 12;
         }
-        health = vitality * 10;
+        health = 100 + vitality * 10;
+        maxHealth = health;
         mana = intelligence * 10;
         level = 1;
         inventory = new Inventory();
+        weapon = null;
+        if (gender == "boy")
+        {
+        	strength++;
+        	agility++;
+        	vitality++;
+        }
+        else
+        {
+        	intelligence += 2;
+        	charisma += 2;
+        }
         
+    }
+    
+    public void resetHealth()
+    {
+    	health = maxHealth;
+    }
+    
+    public int attack()
+    {
+    	if (weapon == null)
+    	{
+    		return 1;
+    	}
+    	return weapon.damage(strength, agility);
     }
     
     public void getDescription()
@@ -116,6 +147,8 @@ public class Hero
     public void setVitality(int vitality)
     {
     	this.vitality = vitality;
+    	maxHealth = 100 + vitality * 10;
+    	health += 10;
     }
     
     public int getCharisma()
@@ -134,6 +167,16 @@ public class Hero
     	this.level = level;
     }
     
+    public void setExperience(int xp)
+    {
+    	experience = xp;
+    }
+    
+    public int getExperience()
+    {
+    	return experience;
+    }
+    
     public int getLevel()
     {
     	return level;
@@ -144,6 +187,11 @@ public class Hero
     	return inventory;
     }
     
+    public String getGender()
+    {
+    	return gender;
+    }
+    
     public void equip(Game g)
     {
     	if (inventory.checkEquipment(this))
@@ -152,8 +200,9 @@ public class Hero
     		inventory.displayEquipment();
 			switch (g.getInput().nextLine().toLowerCase())
 			{
-				case "shoddy sword":
-					inventory.equip(new Shoddy_Sword());
+				case "sword":
+					weapon = new Shoddy_Sword();
+					inventory.equip(weapon);
 				break;
 				case "cancel":
 					break;

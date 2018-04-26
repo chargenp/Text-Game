@@ -1,4 +1,9 @@
 import java.util.Scanner;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 /**
  * 
@@ -12,14 +17,16 @@ public class Game
     private int bsGreet = 0;
     private Dialog dialog;
     private Scanner input;
-    private boolean troll = true;
+    private String inputList;
 
     public Game() 
     {
+    	
     	input = new Scanner(System.in);
         map = new Map();
         this.currentRoom = map.getStart();  
         dialog = new Dialog();
+        inputList = "";
     }
 
     public String describeCurrentRoom() 
@@ -39,6 +46,27 @@ public class Game
         command = command.toLowerCase();
         switch (command)
         {
+        	/*
+        	 * Help pulled from javatutorialhq.com and howtodoinjava.com for save
+        	 */
+        	case "save":
+        		String currentDirectory;
+        		File file = new File("save.txt");
+        		currentDirectory = file.getAbsolutePath();
+        		System.out.println("Saving to : " + currentDirectory);
+        		try
+        		{
+        		file.createNewFile();
+        		FileWriter fwrite = new FileWriter(file);
+        		BufferedWriter writer = new BufferedWriter(fwrite);
+        		writer.append(inputList);
+        		writer.close();
+        		}
+        		catch (IOException io)
+        		{
+        			System.out.println("\nSave Error\n");
+        		}
+        		break;
         	case "inv" :
         		hero.getInventory().displayInventory();
         		System.out.println("Equipped: ");
@@ -48,7 +76,22 @@ public class Game
         	case "fight":
         		if (g.map.getCurrent().hasMonster())
         		{
-        			new Combat(hero, g.map.getCurrent().getMonster(), g);
+        			Combat c = new Combat(hero, g.map.getCurrent().getMonster(), g);
+        			int win = c.fight();
+        			switch (win)
+        			{
+        			case -1:
+        				hero.resetHealth();
+        				g.map.resetMap();
+        				currentRoom = g.map.getCurrent();
+        				break;
+        			case 0:
+        				break;
+        			case 1:
+        				int goldIncrease = (100 + (100 * g.currentRoom.getMonster().getLevel()));
+        				hero.getInventory().addGold(goldIncrease);
+        				break;
+        			}
         		}
         		break;
         	case "mother":
@@ -133,6 +176,10 @@ public class Game
                 handleHelp();
                 break;
         }
+        if (!command.equals("equip"))
+    	{
+    		inputList += command + " ";
+        }
     }
 
     public void handleHelp()
@@ -149,73 +196,146 @@ public class Game
         System.out.print("command > ");
         System.out.flush();
     }
+    
+    public void newGame(Game g)
+    {
+    	System.out.println("It’s been years since there has been any adventure in the small town of "
+                + "\nPurdue. Long days and quiet nights, the same routine day in and day out. It is just a "
+                + "\nsimple mother and her child on their farm trying to make due. This is where our story begins….\n");
+            System.out.println("Are you a boy, or a girl?");
+            String gender = "";
+            boolean gen = true;
+            while (gen)
+            {
+                gender = input.nextLine();
+                if (gender.equalsIgnoreCase("boy"))
+                {
+                    gen = false;
+                }
+                else if (gender.equalsIgnoreCase("girl"))
+                {
+                    gen = false;
+                }
+                else
+                {
+                    System.out.println("\nWrong input. Please type 'boy' or 'girl' without the quotes.\n");
+                }
+            }
+            System.out.println("What is your name?");
+            String nameTemp = "";
+            while (nameTemp.isEmpty())
+            {
+            	nameTemp = input.nextLine();
+            }
+            String typeTemp = "";
+            Boolean build = true;
+            System.out.println("What type of person are you? Strong? Agile? Smart? Choose one.");
+            while (build)
+            {
+                typeTemp = input.nextLine();
+                if (typeTemp.equalsIgnoreCase("strong"))
+                {
+                    build = false;
+                }
+                else if (typeTemp.equalsIgnoreCase("agile"))
+                {
+                    build = false;
+                }
+                else if (typeTemp.equalsIgnoreCase("smart")) 
+                {   
+                    build = false;
+                }
+                else
+                {
+                    System.out.println("\nWrong input. Please type 'strong' 'agile' or 'smart' without the quotes.\n");
+                }
+            }     
+            Hero hero = new Hero(nameTemp, typeTemp, gender); 
+            System.out.println("\nType \"help\" anytime for a command list.\n");
+            ((StartVillage)g.map.getCurrent()).getIntro();
+            System.out.println(g.dialog.getMother());
+            inputList += gender + " " + nameTemp + " " + typeTemp + " ";
+            prompt();
+            while (playing) 
+            {
+                String command = input.nextLine();
+                handleCommand(command, hero, g);
+                prompt();
+            }
+    }
+    
+    public void loadGame(Game g)
+    {
+    	File loadFile = new File("save.txt");
+		try
+		{
+			Scanner load = new Scanner(loadFile);
+			System.out.println("It’s been years since there has been any adventure in the small town of "
+	                + "\nPurdue. Long days and quiet nights, the same routine day in and day out. It is just a "
+	                + "\nsimple mother and her child on their farm trying to make due. This is where our story begins….\n");
+	            System.out.println("Are you a boy, or a girl?");
+	            String gender = load.next();
+	            inputList += gender + " ";
+	            System.out.println("command > " + gender);
+	            System.out.println("What is your name?");
+	            String nameTemp = load.next();
+	            inputList += nameTemp + " ";
+	            System.out.println("command > " + nameTemp);
+	            String typeTemp = load.next();
+	            inputList += typeTemp + " ";
+	            System.out.println("What type of person are you? Strong? Agile? Smart? Choose one.");
+	            System.out.println("command > " + typeTemp);
+	            Hero hero = new Hero(nameTemp, typeTemp, gender); 
+	            System.out.println("\nType \"help\" anytime for a command list.\n");
+	            ((StartVillage)g.map.getCurrent()).getIntro();
+	            System.out.println(g.dialog.getMother());
+	            while (load.hasNext())
+            	{
+	                System.out.print("command > ");
+	                System.out.flush();
+            		String command = load.next();
+            		System.out.println(command);
+            		handleCommand(command, hero, g);
+            	}
+            	load.close();
+            	System.out.println("You must manually re-equip your items.");
+            	prompt();
+	            while (playing) 
+	            {            	
+	                String command = input.nextLine();
+	                handleCommand(command, hero, g);
+	                prompt();
+	            }
+		}
+		catch (FileNotFoundException ex)
+		{
+			System.out.println("No save file found. Starting new game\n");
+			newGame(g);
+		}
+    }
 
     public static void main(String[] args)
     {  
         Game g = new Game(); 
-        System.out.println("It’s been years since there has been any adventure in the small town of "
-            + "\nPurdue. Long days and quiet nights, the same routine day in and day out. It is just a "
-            + "\nsimple mother and her child on their farm trying to make due. This is where our story begins….\n");
-        System.out.println("Are you a boy, or a girl?");
-        String gender = "";
-        boolean gen = true;
-        while (gen)
+        System.out.println("\"New\" game or \"Load\"?");
+        System.out.print("command > ");
+        System.out.flush();
+        boolean start = true;
+        String startStatus = "";
+        while (start)
         {
-            gender = g.input.nextLine();
-            if (gender.equalsIgnoreCase("boy"))
-            {
-                gen = false;
-            }
-            else if (gender.equalsIgnoreCase("girl"))
-            {
-                gen = false;
-            }
-            else
-            {
-                System.out.println("\nWrong input. Please type 'boy' or 'girl' without the quotes.\n");
-            }
+        	startStatus = g.input.nextLine();
+        	if (startStatus.equalsIgnoreCase("new"))
+        	{
+        		start = false;
+        		g.newGame(g);
+        	}
+        	if (startStatus.equalsIgnoreCase("load"));
+        	{
+        		g.loadGame(g);
+        	}
         }
-        System.out.println("What is your name?");
-        String nameTemp = "";
-        while (nameTemp.isEmpty())
-        {
-        	nameTemp = g.input.nextLine();
-        }
-        g.dialog.setCharName(nameTemp);
-        String typeTemp = "";
-        Boolean build = true;
-        System.out.println("What type of person are you? Strong? Agile? Smart? Choose one.");
-        while (build)
-        {
-            typeTemp = g.input.nextLine();
-            if (typeTemp.equalsIgnoreCase("strong"))
-            {
-                build = false;
-            }
-            else if (typeTemp.equalsIgnoreCase("agile"))
-            {
-                build = false;
-            }
-            else if (typeTemp.equalsIgnoreCase("smart")) 
-            {   
-                build = false;
-            }
-            else
-            {
-                System.out.println("\nWrong input. Please type 'strong' 'agile' or 'smart' without the quotes.\n");
-            }
-        }     
-        Hero hero = new Hero(nameTemp, typeTemp, gender); 
-        System.out.println("\nType \"help\" anytime for a command list.\n");
-        ((StartVillage)g.map.getCurrent()).getIntro();
-        System.out.println(g.dialog.getMother());
-        prompt();
-        while (playing) 
-        {
-            String command = g.input.nextLine();
-            g.handleCommand(command, hero, g);
-            prompt();
-        }
+        
     }
     
     public Room getCurrentRoom()

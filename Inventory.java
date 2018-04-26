@@ -5,15 +5,31 @@ public class Inventory
 	private Item[] equipped;
 	private int size;
 	private final int EQUIP_SIZE = 4;
+	private int gold;
 	
 	public Inventory()
 	{
 	    size = 5;
 		inventory = new Item[size];
 		equipped = new Item[EQUIP_SIZE];
-		
+		gold = 100;
 	}
-	   
+	
+	public int getGold()
+	{
+		return gold;
+	}
+	
+	public void addGold(int amount)
+	{
+		gold += amount;
+	}
+	
+	public void removeGold(int amount)
+	{
+		gold -= amount;
+	}
+
     public void addItem(Item item)
     {
     	int i = 0;
@@ -63,6 +79,7 @@ public class Inventory
     
     public void displayInventory()
     {
+    	System.out.println("Gold: " + gold + "\n");
     	for (int i = 0; i < size; i++)
     	{
     		if (inventory[i] != null)

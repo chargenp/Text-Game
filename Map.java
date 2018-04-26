@@ -9,9 +9,14 @@ public class Map
         StartVillage start = new StartVillage();
         this.start = start;
         current = start;
-        Room bridge = new Room(new Troll(1), "Troll bridge");
+        Room bridge = new Room(new Troll(0), "Troll bridge");
         bridge.setWest(start);
         start.setEast(bridge);
+    }
+    
+    public void resetMap()
+    {
+    	current = start;
     }
     
     public Room getCurrent()

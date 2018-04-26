@@ -7,12 +7,12 @@ public class Shoddy_Sword extends Weapon
 	public Shoddy_Sword()
 	{
 		dmgMulti = 1.25;
-		name = "[Shoddy Sword]";
+		name = "[Sword]";
 	}
 	
-	public int damage(int strength)
+	public int damage(int strength, int agility)
 	{
-		return ((int)((10 + (strength * 2)) * dmgMulti));
+		return ((int)((10 + (strength * 2) + (agility * 2.5)) * dmgMulti));
 	}
 	
 	public String getName()

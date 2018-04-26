@@ -1,7 +1,6 @@
 
 public class Dialog 
 {
-    private String charName;
 	private String mother;
 	private String blacksmith;
 	private int motherCount;
@@ -11,10 +10,6 @@ public class Dialog
 	{
 	    motherCount = 0;
 	    blacksmithCount = 0;
-	}
-	public void setCharName(String name)
-	{
-	       charName = name;
 	}
 	
 	public void setMotherCount(int count)

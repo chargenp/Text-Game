@@ -10,9 +10,9 @@ public class Club extends Weapon
 		name = "[Club]";
 	}
 	
-	public int damage(int strength)
+	public int damage(int strength, int agility)
 	{
-		return ((int)((10 + (strength * 2)) * dmgMulti));
+		return ((int)((10 + (strength * 1.5)) * dmgMulti));
 	}
 	
 	public String getName()

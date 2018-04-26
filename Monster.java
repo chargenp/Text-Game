@@ -5,9 +5,13 @@ public abstract class Monster
 	int health;
 	int level;	
 	Item weapon;
+	int agility;
 	
-	public String getName()
-	{
-		return name;
-	}
+	public abstract String getName();
+	public abstract int getHealth();
+	public abstract int getAgility();
+	public abstract int attack();
+	public abstract void setHealth(int health);
+	public abstract int getLevel();
+	public abstract int experienceReward();
 }
