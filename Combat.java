@@ -78,6 +78,9 @@ public class Combat
 	        				count--;
 	        			}
 	        			hero.setLevel(hero.getLevel() + 1);
+	        			System.out.printf("\nStrength: %d\tVitality: %d\tAgility: %d\tIntelligence: %d\tCharisma: %d\n\n",  
+	                        hero.getStrength(), hero.getVitality(), hero.getAgility(), hero.getIntelligence(), hero.getCharisma());
+	        			
 	        		}
 	        		return 1;
 	        	}
@@ -107,7 +110,7 @@ public class Combat
 			hero.setStrength(hero.getStrength() + 1);
 			break;
 		case "v":
-			hero.setVitality(hero.getVitality() + 1);
+			hero.increaseVitality(1);
 			break;
 		case "a":
 			hero.setAgility(hero.getAgility() + 1);
@@ -124,7 +127,7 @@ public class Combat
 	public String getIncrease()
 	{
 		System.out.printf("\nYou may increase %d stats, please choose one:"
-				+ "\nStrength: %d Vitality: %d Agility: &d Intelligence: &d Charisma: &d\n", count, 
+				+ "\nStrength: %d\tVitality: %d\tAgility: %d\tIntelligence: %d\tCharisma: %d\n", count, 
 				hero.getStrength(), hero.getVitality(), hero.getAgility(), hero.getIntelligence(), hero.getCharisma());
 		System.out.print("command > ");
         System.out.flush();

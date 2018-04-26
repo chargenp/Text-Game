@@ -20,6 +20,11 @@ public class Inventory
 		return gold;
 	}
 	
+	public void loadGold(int amount)
+	{
+	    gold = amount;
+	}
+	
 	public void addGold(int amount)
 	{
 		gold += amount;

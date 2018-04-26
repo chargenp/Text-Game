@@ -6,10 +6,33 @@ public class Room
     private Room east;
     private Room west;
     private Monster monster;
+    private boolean visited;
+    private String flavorText;
     
     public Room()
-    {
+    {   
+        flavorText = "";
+        visited = false;
         description = "";
+    }
+    
+    public void setFlavorText(String text)
+    {
+        this.flavorText = text;
+    }
+    
+    public void monsterDefeated()
+    {
+        this.monster = null;
+    }
+    
+    public void getIntro()
+    {
+        if (!visited)
+        {
+            visited = true;
+            System.out.println(flavorText);
+        }
     }
     
     public Room(String description)

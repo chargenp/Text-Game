@@ -1,15 +1,26 @@
 
 public class StartVillage extends Room
 {
+    public boolean visited;
+    
 	public StartVillage()
 	{
 		super();
 	}
 	
 	public void getIntro()
+	{   
+	    if (!visited)
+	    {
+	        System.out.println("After completing your morning chores on the farm, you head inside to see"
+	            + "\nyour mother, who is just finishing breakfast.\n");
+	    }
+	    visited = true;
+	}
+	
+	public String getDescription()
 	{
-		System.out.println("After completing your morning chores on the farm, you head inside to see"
-		    + "\nyour mother, who is just finishing breakfast.\n");
+	    return "Your farm at the village you grew up around.";
 	}
 	
 	public String getCommands()

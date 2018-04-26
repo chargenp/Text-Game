@@ -94,6 +94,11 @@ public class Hero
     	return mana;
     }
     
+    public int getMaxHealth()
+    {
+        return maxHealth;
+    }
+    
     public String getName()
     {
         return name;
@@ -147,8 +152,12 @@ public class Hero
     public void setVitality(int vitality)
     {
     	this.vitality = vitality;
-    	maxHealth = 100 + vitality * 10;
-    	health += 10;
+    }
+    public void increaseVitality(int increase)
+    {
+        this.vitality += increase;
+        maxHealth = 100 + this.vitality * 10;
+        health += 10 * increase;
     }
     
     public int getCharisma()
@@ -192,6 +201,15 @@ public class Hero
     	return gender;
     }
     
+    public void loadCreateWeapon(String weapon)
+    {
+        if (weapon.equalsIgnoreCase("sword"))
+        {
+            this.weapon = new Shoddy_Sword();
+            inventory.equip(this.weapon);
+        }
+    }
+    
     public void equip(Game g)
     {
     	if (inventory.checkEquipment(this))
@@ -217,8 +235,21 @@ public class Hero
     	}
     }
     
+    public void setMaxHealth(int maxHealth)
+    {
+        this.maxHealth = maxHealth;
+    }
+    
     public void displayEquip()
     {
     	inventory.displayEquipped();
+    }
+    
+    public String getSave()
+    {
+        String temp = String.format("%d %d %d %d %d %d %d %d %d %d ", 
+            level, experience, strength, vitality, agility, intelligence, charisma, health, maxHealth, inventory.getGold());
+        temp += weapon;
+        return temp;
     }
 }

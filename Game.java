@@ -18,10 +18,11 @@ public class Game
     private Dialog dialog;
     private Scanner input;
     private String inputList;
+    private boolean troll;
 
     public Game() 
     {
-    	
+        troll = false;
     	input = new Scanner(System.in);
         map = new Map();
         this.currentRoom = map.getStart();  
@@ -36,9 +37,26 @@ public class Game
     
     public void RoomEnter(Room next, Game g)
     {
+        if (next == map.getStart())
+        {
+            troll = false;
+        }
+        if (currentRoom == map.getTrollMap() && troll)
+        {
+            System.out.println("\nThe troll wont let you pass!\n");
+            return;
+        }
     	currentRoom = next;
     	g.map.setCurrent(next);
-    	System.out.println(currentRoom.getDescription());  	
+    	System.out.println(currentRoom.getDescription());
+    	currentRoom.getIntro();
+    	if (next == map.getTrollMap())
+    	{
+    	    if (next.getMonster() != null)
+    	    {
+    	        troll = true;
+    	    }
+    	}
     }
 
     public void handleCommand(String command, Hero hero, Game g)
@@ -52,15 +70,21 @@ public class Game
         	case "save":
         		String currentDirectory;
         		File file = new File("save.txt");
+        		File heroFile = new File("heroFile.txt");
         		currentDirectory = file.getAbsolutePath();
         		System.out.println("Saving to : " + currentDirectory);
         		try
         		{
         		file.createNewFile();
+        		heroFile.createNewFile();
         		FileWriter fwrite = new FileWriter(file);
+        		FileWriter hWrite = new FileWriter(heroFile);
         		BufferedWriter writer = new BufferedWriter(fwrite);
+        		BufferedWriter hWriter = new BufferedWriter(hWrite);
         		writer.append(inputList);
+        		hWrite.append(hero.getSave());
         		writer.close();
+        		hWriter.close();
         		}
         		catch (IOException io)
         		{
@@ -81,15 +105,25 @@ public class Game
         			switch (win)
         			{
         			case -1:
+        			    
         				hero.resetHealth();
         				g.map.resetMap();
         				currentRoom = g.map.getCurrent();
+        				System.out.println("\nYou wake up back at home, feeling like you had a terrible dream\n");
+        				System.out.println(currentRoom.getDescription() + "\n");
         				break;
         			case 0:
         				break;
         			case 1:
         				int goldIncrease = (100 + (100 * g.currentRoom.getMonster().getLevel()));
         				hero.getInventory().addGold(goldIncrease);
+        				System.out.println(currentRoom.getDescription());
+        				Monster tempMonster = g.currentRoom.getMonster();
+        				g.currentRoom.monsterDefeated();
+        				if (tempMonster instanceof Troll)
+        				{
+        				        troll = false;
+        				}
         				break;
         			}
         		}
@@ -128,7 +162,11 @@ public class Game
         		handleCommand("quit", hero, g);
         		break;
         	case "stats":
+        	    System.out.println("Max Health: " + hero.getMaxHealth());
         		System.out.println("Health: " + hero.getHealth());
+        		System.out.println("Level: " + hero.getLevel());
+        		System.out.println("Experience: " + hero.getExperience());
+        		System.out.println("Next Level: " + (100 * hero.getLevel()));
         		System.out.println("Mana: " + hero.getMana());
         		System.out.println("Strength: " + hero.getStrength());
         		System.out.println("Agility: " + hero.getAgility());
@@ -176,7 +214,7 @@ public class Game
                 handleHelp();
                 break;
         }
-        if (!command.equals("equip"))
+        if (!(command.equals("equip") || command.equals("help") || command.equals("exits") || command.equals("fight")))
     	{
     		inputList += command + " ";
         }
@@ -187,7 +225,7 @@ public class Game
         System.out.println("\"help\" for a list of commands.\n\"exits\" for a list of exits and interactions.");
         System.out.println("\"quit\" to quit the game\n\"self\" for information about your character.");
         System.out.println("\"stats\" for character stat display.\n\"inv\" to display inventory and equipment.");
-        System.out.println("\"equip\" to equip items from inventory\n");
+        System.out.println("\"equip\" to equip items from inventory.\n \"save\" to save.\n");
         
     }
 
@@ -267,9 +305,11 @@ public class Game
     public void loadGame(Game g)
     {
     	File loadFile = new File("save.txt");
+    	File heroLoadFile = new File("heroFile.txt");
 		try
 		{
 			Scanner load = new Scanner(loadFile);
+			Scanner heroLoad = new Scanner(heroLoadFile);
 			System.out.println("It’s been years since there has been any adventure in the small town of "
 	                + "\nPurdue. Long days and quiet nights, the same routine day in and day out. It is just a "
 	                + "\nsimple mother and her child on their farm trying to make due. This is where our story begins….\n");
@@ -298,7 +338,26 @@ public class Game
             		handleCommand(command, hero, g);
             	}
             	load.close();
-            	System.out.println("You must manually re-equip your items.");
+            	int tempInt = heroLoad.nextInt();
+            	hero.setLevel(tempInt);
+            	hero.setExperience(heroLoad.nextInt());
+            	hero.setStrength(heroLoad.nextInt());
+            	hero.setVitality(heroLoad.nextInt());
+            	hero.setAgility(heroLoad.nextInt());
+            	hero.setIntelligence(heroLoad.nextInt());
+            	hero.setCharisma(heroLoad.nextInt());
+            	hero.setHealth(heroLoad.nextInt());
+            	hero.setMaxHealth(heroLoad.nextInt());
+            	hero.getInventory().loadGold(heroLoad.nextInt());
+            	String tempWeapon = heroLoad.nextLine();
+            	tempWeapon = tempWeapon.trim();
+            	// Stringbuilder idea gotten from stack overflow
+            	StringBuilder str = new StringBuilder(tempWeapon);
+            	str.deleteCharAt(tempWeapon.length() - 1);
+            	str.deleteCharAt(0);
+            	tempWeapon = str.toString();
+            	hero.loadCreateWeapon(tempWeapon);
+            	heroLoad.close();
             	prompt();
 	            while (playing) 
 	            {            	
