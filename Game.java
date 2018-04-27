@@ -41,7 +41,7 @@ public class Game
         {
             troll = false;
         }
-        if (currentRoom == map.getTrollMap() && troll)
+        if (currentRoom instanceof TrollBridge && troll)
         {
             System.out.println("\nThe troll wont let you pass!\n");
             return;
@@ -50,7 +50,7 @@ public class Game
     	g.map.setCurrent(next);
     	System.out.println(currentRoom.getDescription());
     	currentRoom.getIntro();
-    	if (next == map.getTrollMap())
+    	if (next instanceof TrollBridge)
     	{
     	    if (next.getMonster() != null)
     	    {

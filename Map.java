@@ -5,17 +5,16 @@ public class Map
     private Random rng;
     private Room start;
     private Room current;
-    private Room TrollBridge;
     private Room[] level0;
     
     public Map()
     { 	
         rng = new Random();
         StartVillage start = new StartVillage();
+        TrollBridge trollBridge = new TrollBridge(new Troll(0), "Troll bridge");
         this.start = start;
         current = start;
-        TrollBridge = new Room(new Troll(0), "Troll bridge");
-        TrollBridge.setFlavorText("spooky bridge, troll appears");
+        trollBridge.setFlavorText("spooky bridge, troll appears");
         Room forest1 = new Room("A forest");
         Room forest2 = new Room("A forest 2");
         Room meadow1 = new Room("A pretty meadow");
@@ -57,21 +56,16 @@ public class Map
         	}
         }
         
-        TrollBridge.setWest(this.start);
-        this.start.setEast(TrollBridge);
-        TrollBridge.setEast(tempRoom1);
-        tempRoom1.setWest(TrollBridge);
+        trollBridge.setWest(this.start);
+        this.start.setEast(trollBridge);
+        trollBridge.setEast(tempRoom1);
+        tempRoom1.setWest(trollBridge);
         tempRoom1.setNorth(tempRoom2);
         tempRoom1.setEast(tempRoom3);
         tempRoom2.setSouth(tempRoom1);
         tempRoom3.setWest(tempRoom1);
         tempRoom3.setEast(tempRoom4);       
         tempRoom4.setWest(tempRoom3);
-    }
-    
-    public Room getTrollMap()
-    {
-        return TrollBridge;
     }
     
     public void resetMap()
