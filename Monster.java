@@ -4,8 +4,10 @@ public abstract class Monster
 	String name;
 	int health;
 	int level;	
-	Item weapon;
+	Weapon weapon;
 	int agility;
+	int strength;
+	int maxHealth;
 	
 	public abstract String getName();
 	public abstract int getHealth();
@@ -14,4 +16,5 @@ public abstract class Monster
 	public abstract void setHealth(int health);
 	public abstract int getLevel();
 	public abstract int experienceReward();
+	public abstract void resetHealth();
 }

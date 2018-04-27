@@ -15,10 +15,10 @@ public class Map
         this.start = start;
         current = start;
         trollBridge.setFlavorText("spooky bridge, troll appears");
-        Room forest1 = new Room("A forest");
-        Room forest2 = new Room("A forest 2");
-        Room meadow1 = new Room("A pretty meadow");
-        Room meadow2 = new Room("A pretty meadow 2");
+        Room forest1 = new Room(new Skeleton(0), "A forest");
+        Room forest2 = new Room(new Treant(0), "A forest 2");
+        Room meadow1 = new Room(new Skeleton(1),"A pretty meadow");
+        Room meadow2 = new Room(new Skeleton(0),"A pretty meadow 2");
         forest1.setFlavorText("spooooooky");
         forest2.setFlavorText("spooooooky 2");
         meadow1.setFlavorText("peacefull");

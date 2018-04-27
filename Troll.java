@@ -3,18 +3,25 @@ public class Troll extends Monster
 {
 	private final String NAME = "Troll";
 	private int health;
+	private int maxHealth;
 	private int level;
 	private Weapon weapon;
-	private final int agility = 9;
-	private final int strength = 12;
+	private int agility;
+	private int strength;
 	
 	public Troll(int level)
 	{
+		this.agility = (5 + (2 * level));
+		this.strength = (6 + (6 * level));
 		this.level = level;
 		health = (300 + (150 * this.level)); 
+		maxHealth = health;
 		this.weapon = new Club();
 	}
-	
+	public void resetHealth()
+	{
+		this.health = maxHealth;
+	}
 	public int experienceReward()
 	{
 		return (30 + (30 * level));

@@ -93,6 +93,79 @@ public class Game
         			System.out.println("\nSave Error\n");
         		}
         		break;
+        	case "charm":
+        		if (g.map.getCurrent().hasMonster())
+        		{
+        			if (g.map.getCurrent().getMonster() instanceof Troll)
+        			{
+        				Combat charm = new Combat(hero, g.map.getCurrent().getMonster(), g);
+        				int win = charm.charm();
+        				switch (win)
+            			{
+            			case -1:  
+            				hero.resetHealth();
+            				g.map.resetMap();
+            				currentRoom = g.map.getCurrent();
+            				System.out.println("\nYou wake up back at home, feeling like you had a terrible dream\n");
+            				System.out.println(currentRoom.getDescription() + "\n");
+            				break;
+            			case 0:
+            				break;
+            			case 1:
+            				int goldIncrease = (100 + (100 * g.currentRoom.getMonster().getLevel()));
+            				System.out.printf("You recieve %d gold\n", goldIncrease);
+            				hero.getInventory().addGold(goldIncrease);
+            				System.out.println(currentRoom.getDescription());
+            				Monster tempMonster = g.currentRoom.getMonster();
+            				g.currentRoom.monsterDefeated();
+            				if (tempMonster instanceof Troll)
+            				{
+            				        troll = false;
+            				}
+            				break;
+            			default:
+            				break;
+        			}
+        		}       		
+        		break;
+        		}
+        	case "outsmart":
+        		if (g.map.getCurrent().hasMonster())
+        		{
+        			if (g.map.getCurrent().getMonster() instanceof Troll)
+        			{
+        				Combat smart = new Combat(hero, g.map.getCurrent().getMonster(), g);
+        				int win = smart.smart();
+        				switch (win)
+            			{
+            			case -1:
+            			    g.currentRoom.getMonster().resetHealth();
+            				hero.resetHealth();
+            				g.map.resetMap();
+            				currentRoom = g.map.getCurrent();
+            				System.out.println("\nYou wake up back at home, feeling like you had a terrible dream\n");
+            				System.out.println(currentRoom.getDescription() + "\n");
+            				break;
+            			case 0:
+            				break;
+            			case 1:
+            				int goldIncrease = (100 + (100 * g.currentRoom.getMonster().getLevel()));
+            				System.out.printf("You recieve %d gold\n", goldIncrease);
+            				hero.getInventory().addGold(goldIncrease);
+            				System.out.println(currentRoom.getDescription());
+            				Monster tempMonster = g.currentRoom.getMonster();
+            				g.currentRoom.monsterDefeated();
+            				if (tempMonster instanceof Troll)
+            				{
+            				        troll = false;
+            				}
+            				break;
+            			default:
+            				break;
+            			}
+        			}
+        		}       	
+        		break;
         	case "inv" :
         		hero.getInventory().displayInventory();
         		System.out.println("Equipped: ");
@@ -118,6 +191,7 @@ public class Game
         				break;
         			case 1:
         				int goldIncrease = (100 + (100 * g.currentRoom.getMonster().getLevel()));
+        				System.out.printf("You recieve %d gold\n", goldIncrease);
         				hero.getInventory().addGold(goldIncrease);
         				System.out.println(currentRoom.getDescription());
         				Monster tempMonster = g.currentRoom.getMonster();
@@ -168,7 +242,7 @@ public class Game
         		System.out.println("Health: " + hero.getHealth());
         		System.out.println("Level: " + hero.getLevel());
         		System.out.println("Experience: " + hero.getExperience());
-        		System.out.println("Next Level: " + (100 * hero.getLevel()));
+        		System.out.println("Next Level: " + ((100 * (hero.getLevel()) / 2)));
         		System.out.println("Mana: " + hero.getMana());
         		System.out.println("Strength: " + hero.getStrength());
         		System.out.println("Agility: " + hero.getAgility());

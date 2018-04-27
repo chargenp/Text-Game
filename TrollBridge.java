@@ -79,6 +79,14 @@ public class TrollBridge extends Room
         {
             System.out.print("fight[" + this.monster.getName() + "] ");
         }
+        if (monster != null)
+        {
+            System.out.print("charm[" + this.monster.getName() + "] ");
+        }
+        if (monster != null)
+        {
+            System.out.print("outsmart[" + this.monster.getName() + "] ");
+        }
         System.out.println();
     }
     

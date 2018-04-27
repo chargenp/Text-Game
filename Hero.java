@@ -23,10 +23,10 @@ public class Hero
         experience = 0;
         if (build.toLowerCase().equals("strong"))
         {
-        	strength = 13;
-        	agility = 8;
+        	strength = 14;
+        	agility = 10;
         	intelligence = 7;
-        	charisma = 13;
+        	charisma = 9;
         	vitality = 12;
         }
         if (build.toLowerCase().equals("agile"))
@@ -34,7 +34,7 @@ public class Hero
             strength = 8;
             agility = 14;
             intelligence = 9;
-            charisma = 10;
+            charisma = 13;
             vitality = 8;
         }
         if (build.toLowerCase().equals("smart"))
