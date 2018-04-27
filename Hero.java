@@ -48,7 +48,7 @@ public class Hero
         health = 100 + vitality * 10;
         maxHealth = health;
         mana = intelligence * 10;
-        level = 1;
+        level = 0;
         inventory = new Inventory();
         weapon = null;
         if (gender == "boy")

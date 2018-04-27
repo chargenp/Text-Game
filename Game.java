@@ -82,7 +82,9 @@ public class Game
         		BufferedWriter writer = new BufferedWriter(fwrite);
         		BufferedWriter hWriter = new BufferedWriter(hWrite);
         		writer.append(inputList);
-        		hWrite.append(hero.getSave());
+        		String temp = hero.getSave();
+        		temp += " " + g.map.getCurrent().getMonster();
+        		hWrite.append(temp);
         		writer.close();
         		hWriter.close();
         		}
@@ -349,7 +351,7 @@ public class Game
             	hero.setHealth(heroLoad.nextInt());
             	hero.setMaxHealth(heroLoad.nextInt());
             	hero.getInventory().loadGold(heroLoad.nextInt());
-            	String tempWeapon = heroLoad.nextLine();
+            	String tempWeapon = heroLoad.next();
             	tempWeapon = tempWeapon.trim();
             	// Stringbuilder idea gotten from stack overflow
             	StringBuilder str = new StringBuilder(tempWeapon);
@@ -357,6 +359,11 @@ public class Game
             	str.deleteCharAt(0);
             	tempWeapon = str.toString();
             	hero.loadCreateWeapon(tempWeapon);
+            	String temp = heroLoad.next();
+            	if (temp.equals("null"))
+            	{
+            		g.map.monsterLoad();
+            	}
             	heroLoad.close();
             	prompt();
 	            while (playing) 

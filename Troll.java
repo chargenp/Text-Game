@@ -17,7 +17,7 @@ public class Troll extends Monster
 	
 	public int experienceReward()
 	{
-		return (100 + (100 * level));
+		return (30 + (30 * level));
 	}
 	
 	public int getLevel()

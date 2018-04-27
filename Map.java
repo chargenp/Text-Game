@@ -34,14 +34,39 @@ public class Map
         int tempInt = rng.nextInt(4);
         Room tempRoom1 = level0[tempInt];
         level0[tempInt] = null;
-        Room tempRoom2;
-        Room tempRoom3;
-        Room tempRoom4;
-        
+        Room tempRoom2 = null;
+    	Room tempRoom3 = null;
+    	Room tempRoom4 = null;
+        while (tempRoom2 == null || tempRoom3 == null || tempRoom4 == null)
+        {
+        	tempInt = rng.nextInt(4);
+        	if (tempRoom2 == null)
+        	{
+        		tempRoom2 = level0[tempInt];
+        		level0[tempInt] = null;
+        	}
+        	else if (tempRoom3 == null)
+        	{
+        		tempRoom3 = level0[tempInt];
+        		level0[tempInt] = null;
+        	}
+        	else if (tempRoom4 == null)
+        	{
+        		tempRoom4 = level0[tempInt];
+        		level0[tempInt] = null;
+        	}
+        }
         
         TrollBridge.setWest(this.start);
         this.start.setEast(TrollBridge);
-        
+        TrollBridge.setEast(tempRoom1);
+        tempRoom1.setWest(TrollBridge);
+        tempRoom1.setNorth(tempRoom2);
+        tempRoom1.setEast(tempRoom3);
+        tempRoom2.setSouth(tempRoom1);
+        tempRoom3.setWest(tempRoom1);
+        tempRoom3.setEast(tempRoom4);       
+        tempRoom4.setWest(tempRoom3);
     }
     
     public Room getTrollMap()
@@ -68,4 +93,8 @@ public class Map
         return start;
     }
     
+    public void monsterLoad()
+    {
+    	current.monsterDefeated();
+    }
 }

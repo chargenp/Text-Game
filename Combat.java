@@ -67,7 +67,7 @@ public class Combat
 	        		inCombat = false;
 	        		System.out.println("You gained " + monster.experienceReward() + " experience points!");
 	        		hero.setExperience(hero.getExperience() + monster.experienceReward());
-	        		if (hero.getExperience() >= (100 * hero.getLevel()))
+	        		if (hero.getExperience() >= (100 * (hero.getLevel()) / 2))
 	        		{
 	        			count = 3;
 	        			System.out.println("You have leveled up!");
