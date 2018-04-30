@@ -1,1 +1,9 @@
-0 0 8 8 14 11 15 180 180 100 [Sword] Troll@232204a1
+false 
+1 30 10 9 14 11 15 190 190 100 5
+Potion
+Potion 
+x 
+x 
+x 
+Sword  
+Treant@75b84c92

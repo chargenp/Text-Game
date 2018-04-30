@@ -1,4 +1,5 @@
 
+
 public class Hero
 {
 	private Inventory inventory;
@@ -247,9 +248,9 @@ public class Hero
     
     public String getSave()
     {
-        String temp = String.format("%d %d %d %d %d %d %d %d %d %d ", 
-            level, experience, strength, vitality, agility, intelligence, charisma, health, maxHealth, inventory.getGold());
-        temp += weapon;
+        String temp = String.format("%d %d %d %d %d %d %d %d %d %d %s", 
+            level, experience, strength, vitality, agility, intelligence, charisma, health, 
+            maxHealth, inventory.getGold(), inventory.invSave());
         return temp;
     }
 }

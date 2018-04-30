@@ -119,8 +119,48 @@ public class Combat
 	        	}
 	        	if (tempAction.equals("Item"))
 	        	{
-
-	        	}
+	        	    hero.getInventory().displayInventory();
+	        	    int count = 0;
+	        	    for (int i= 0; i < hero.getInventory().getSize(); i++)
+	        	    {
+	        	        if (hero.getInventory().getArray()[i] != null)
+	        	        {
+	        	            count ++;
+	        	        }
+	        	    }
+	        	    if (count != 0)
+	        	    {
+	        	        while (true)
+	        	        {
+	        	            System.out.println("\nSelect an item to use or \"exit\".");
+	        	            System.out.print("Command > ");
+	        	            System.out.flush();
+	        	            String itemInput = input.nextLine();
+	        	            if (itemInput.equalsIgnoreCase("potion"))
+	        	            {
+	        	                Consumable temp = hero.getInventory().getItem("potion");
+	        	                temp.consume(hero);
+	        	                hero.getInventory().consumeItem("potion");
+	        	                break;
+	        	            }
+	        	            if (itemInput.equalsIgnoreCase("exit"))
+	        	            {
+	        	                break;
+	        	            }
+	        	            if (itemInput.equalsIgnoreCase("grenade"))
+                            {
+                                Consumable temp = hero.getInventory().getItem("grenade");
+                                temp.consume(hero);
+                                hero.getInventory().consumeItem("grenade");
+                                break;
+                            }
+	        	        }
+	        	    }
+	        	    else
+	        	    {
+	        	       System.out.println("\nNo items!\n");
+	        	    }
+	        	} 
 	        	if (tempAction.equals("Run"))
 	        	{	        		
 	        		if (rng.nextInt(99) + 1 + (hero.getAgility() * 3) > 80)
@@ -270,7 +310,7 @@ public class Combat
         }
         else if (command.equals("item") || command.equals("i"))
         {
-        	return "attack";
+        	return "item";
         }
         else if (command.equals("run") || command.equals("r"))
         {

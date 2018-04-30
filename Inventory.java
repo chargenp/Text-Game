@@ -15,6 +15,15 @@ public class Inventory
 		gold = 100;
 	}
 	
+	public Item[] getArray()
+	{
+	    return inventory;
+	}
+	public int getSize()
+	{
+	    return size;
+	}
+	
 	public int getGold()
 	{
 		return gold;
@@ -34,6 +43,30 @@ public class Inventory
 	{
 		gold -= amount;
 	}
+	
+	public Consumable getItem(String itemName)
+	{
+	    for (int i = 0; i < size; i++)
+        {
+            if (inventory[i].toString().equalsIgnoreCase(itemName))
+            {
+                Consumable temp = ((Consumable)inventory[i]);
+                return temp;
+            }
+        }
+	    return null;
+	}
+	
+	public void consumeItem(String itemName)
+	{
+	    for (int i = 0; i < size; i++)
+	    {
+	        if (inventory[i].toString().equalsIgnoreCase(itemName))
+	        {
+	            inventory[i] = null;
+	        }
+	    }
+	}
 
     public void addItem(Item item)
     {
@@ -42,7 +75,31 @@ public class Inventory
     	{
     		i++;
     	}
+    	if (i < size)
+    	{
+    	    System.out.println("Inventory full.");
+    	    return;
+    	}
     	inventory[i] = item;
+    }
+    
+    public void addItem(String item)
+    {
+        int i = 0;
+        while (inventory[i] != null && i < size)
+        {
+            i++;
+        }
+        if (i < size)
+        {
+            System.out.println("Inventory full.");
+            return;
+        }
+        switch (item)
+        {
+            case "potion":
+        }
+        inventory[i] = item;
     }
     
     public void equip(Item toEquip)
@@ -89,7 +146,7 @@ public class Inventory
     	{
     		if (inventory[i] != null)
     		{
-    			System.out.print(inventory[i].getName() + " ");
+    			System.out.print("[" + inventory[i].getName() + "] ");
     			
     		}
     		else
@@ -99,6 +156,32 @@ public class Inventory
     	}
     	System.out.print("\n\n");
     }
+    
+    public String invSave()
+    {
+        String temp = size + "\n";
+        for (int i = 0; i < size; i++)
+        {
+            if (inventory[i] != null)
+            {
+                temp += inventory[i].getName() + "\n";
+                
+            }
+            else
+            {
+                temp += "x" + "\n";
+            }
+        }
+        for (int i = 0; i < EQUIP_SIZE; i++)
+        {
+            if (equipped[i] != null)
+            {
+                temp += equipped[i] + "\n";
+            }
+        }
+        return temp;
+    }
+    
     public boolean checkEquipment(Hero hero)
     {
     	int count = 0;

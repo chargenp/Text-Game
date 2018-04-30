@@ -7,7 +7,7 @@ public class Shoddy_Sword extends Weapon
 	public Shoddy_Sword()
 	{
 		dmgMulti = 1.25;
-		name = "[Sword]";
+		name = "Sword";
 	}
 	
 	public int damage(int strength, int agility)

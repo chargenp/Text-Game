@@ -82,7 +82,8 @@ public class Game
         		BufferedWriter writer = new BufferedWriter(fwrite);
         		BufferedWriter hWriter = new BufferedWriter(hWrite);
         		writer.append(inputList);
-        		String temp = hero.getSave();
+        		String temp = troll + "\n";
+        		temp += hero.getSave();
         		temp += " " + g.map.getCurrent().getMonster();
         		hWrite.append(temp);
         		writer.close();
@@ -93,6 +94,12 @@ public class Game
         			System.out.println("\nSave Error\n");
         		}
         		break;
+        	case "loot":
+        	    if (currentRoom.hasLoot())
+        	    {
+        	        hero.getInventory().addItem(currentRoom.getLoot());
+        	    }
+        	    break;
         	case "charm":
         		if (g.map.getCurrent().hasMonster())
         		{
@@ -123,6 +130,15 @@ public class Game
             				        troll = false;
             				}
             				break;
+            			case 2: 
+            			    System.out.println(currentRoom.getDescription());
+                            Monster tempMonster1 = g.currentRoom.getMonster();
+                            g.currentRoom.monsterDefeated();
+                            if (tempMonster1 instanceof Troll)
+                            {
+                                    troll = false;
+                            }
+                            break;            			    
             			default:
             				break;
         			}
@@ -160,6 +176,15 @@ public class Game
             				        troll = false;
             				}
             				break;
+            			case 2: 
+            			    System.out.println(currentRoom.getDescription());
+                            Monster tempMonster2 = g.currentRoom.getMonster();
+                            g.currentRoom.monsterDefeated();
+                            if (tempMonster2 instanceof Troll)
+                            {
+                                    troll = false;
+                            }
+                            break;
             			default:
             				break;
             			}
@@ -290,7 +315,8 @@ public class Game
                 handleHelp();
                 break;
         }
-        if (!(command.equals("equip") || command.equals("help") || command.equals("exits") || command.equals("fight")))
+        if (!(command.equals("equip") || command.equals("help") || command.equals("exits") || command.equals("fight") 
+            || command.equals("loot") || command.equals("charm") || command.equals("outsmart") || command.equals("loot")))
     	{
     		inputList += command + " ";
         }
@@ -405,17 +431,12 @@ public class Game
 	            System.out.println("\nType \"help\" anytime for a command list.\n");
 	            ((StartVillage)g.map.getCurrent()).getIntro();
 	            System.out.println(g.dialog.getMother());
-	            while (load.hasNext())
-            	{
-	                System.out.print("command > ");
-	                System.out.flush();
-            		String command = load.next();
-            		System.out.println(command);
-            		handleCommand(command, hero, g);
-            	}
-            	load.close();
-            	int tempInt = heroLoad.nextInt();
-            	hero.setLevel(tempInt);
+	            String trollTemp = heroLoad.nextLine();
+	            if (trollTemp.equals("false"))
+	            {
+	                g.troll = false;
+	            }
+            	hero.setLevel(heroLoad.nextInt());
             	hero.setExperience(heroLoad.nextInt());
             	hero.setStrength(heroLoad.nextInt());
             	hero.setVitality(heroLoad.nextInt());
@@ -425,15 +446,21 @@ public class Game
             	hero.setHealth(heroLoad.nextInt());
             	hero.setMaxHealth(heroLoad.nextInt());
             	hero.getInventory().loadGold(heroLoad.nextInt());
-            	String tempWeapon = heroLoad.next();
-            	tempWeapon = tempWeapon.trim();
-            	// Stringbuilder idea gotten from stack overflow
-            	StringBuilder str = new StringBuilder(tempWeapon);
-            	str.deleteCharAt(tempWeapon.length() - 1);
-            	str.deleteCharAt(0);
-            	tempWeapon = str.toString();
+            	int tempSize = heroLoad.nextInt();
+            	for (int i = 0; i < tempSize; i++)
+            	{
+            	    String tempWeapon = heroLoad.next();
+            	    if (!tempWeapon.equals("x"))
+            	    {
+            	        hero.getInventory().addItem(tempWeapon);
+            	    }
+            	}
+            	
+                   
             	hero.loadCreateWeapon(tempWeapon);
             	String temp = heroLoad.next();
+                //fuck me load the loop from git;
+            	load.close();
             	if (temp.equals("null"))
             	{
             		g.map.monsterLoad();

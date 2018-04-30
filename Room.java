@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class Room 
 {
     private String description;
@@ -8,12 +10,42 @@ public class Room
     private Monster monster;
     private boolean visited;
     private String flavorText;
+    private Consumable[] items;
+    private Consumable loot;
     
     public Room()
     {   
+        Random rng = new Random();
+        items = new Consumable[2];
+        items[0] = new Potion();
+        items[1] = new Potion();
+        if (rng.nextInt(100) < 100)
+        {
+            loot = items[rng.nextInt(1)];
+        }
         flavorText = "";
         visited = false;
         description = "";
+    }
+    
+    public boolean hasLoot()
+    {
+        return loot != null;
+    }
+    
+    public Consumable getLoot()
+    {
+        if (loot != null)
+        {
+            Consumable temp = loot;
+            loot = null;
+            return temp;
+        }
+        else
+        {
+            return null;
+        }
+        
     }
     
     public void setFlavorText(String text)
@@ -44,6 +76,14 @@ public class Room
     {
     	this.monster = monster;
     	this.description = description;
+    	Random rng = new Random();
+        items = new Consumable[2];
+        items[0] = new Potion();
+        items[1] = new Potion();
+        if (rng.nextInt(100) < 100)
+        {
+            loot = items[rng.nextInt(1)];
+        }
     }
     
     public boolean hasMonster()
@@ -77,6 +117,10 @@ public class Room
         if (monster != null)
         {
         	System.out.print("fight[" + this.monster.getName() + "] ");
+        }
+        if (hasLoot())
+        {
+            System.out.print("loot[" + this.loot.toString() + "] ");
         }
         System.out.println();
     }
