@@ -1,3 +1,4 @@
+package src;
 import java.util.Random;
 
 public class Room 
@@ -19,7 +20,7 @@ public class Room
         items = new Consumable[2];
         items[0] = new Potion();
         items[1] = new Potion();
-        if (rng.nextInt(100) < 100)
+        if (rng.nextInt(100) < 40)
         {
             loot = items[rng.nextInt(1)];
         }

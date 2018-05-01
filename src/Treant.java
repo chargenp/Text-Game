@@ -1,22 +1,21 @@
+package src;
 
-public class Skeleton extends Monster
+public class Treant extends Monster
 {
-	private final String name = "Skeleton";
+	private final String name = "Treant";
 	private int health;
 	private int maxHealth;
 	private int level;	
-	private Weapon weapon;
 	private int agility;
 	private int strength;
 
-	public Skeleton(int level)
+	public Treant(int level)
 	{
-		agility = (6 + (3 * level));
-		strength = (5 + (2 * level));
+		agility = (4 + (1 * level));
+		strength = (16 + (4 * level));
 		this.level = level;
-		health = (100 + (125 * this.level)); 
+		health = (300 + (350 * this.level)); 
 		maxHealth = health;
-		this.weapon = new Shoddy_Sword();
 	}
 	public void resetHealth()
 	{
@@ -36,7 +35,7 @@ public class Skeleton extends Monster
 	}
 	public int attack()
 	{
-		return weapon.damage(strength, agility);
+		return ((int)((10 + (strength * 1.5)) * 1.3));
 	}
 	public void setHealth(int health)
 	{
@@ -48,6 +47,6 @@ public class Skeleton extends Monster
 	}
 	public int experienceReward()
 	{
-		return (10 + (10 * level));
+		return -1;
 	}
 }

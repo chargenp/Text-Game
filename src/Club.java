@@ -1,18 +1,19 @@
+package src;
 
-public class Shoddy_Sword extends Weapon
+public class Club extends Weapon
 {
 	private double dmgMulti;
 	private String name;
 	
-	public Shoddy_Sword()
+	public Club()
 	{
-		dmgMulti = 1.25;
-		name = "Sword";
+		dmgMulti = 1.5;
+		name = "[Club]";
 	}
 	
 	public int damage(int strength, int agility)
 	{
-		return ((int)((10 + (strength * 1.1) + (agility * 1.5)) * dmgMulti));
+		return ((int)((10 + (strength * 1.5)) * dmgMulti));
 	}
 	
 	public String getName()

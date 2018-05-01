@@ -1,3 +1,4 @@
+package src;
 
 public class TrollBridge extends Room
 {
@@ -9,9 +10,11 @@ public class TrollBridge extends Room
     private Monster monster;
     private boolean visited;
     private String flavorText;
+    private Consumable loot;
     
     public TrollBridge()
     {   
+    	loot = new Potion();
         flavorText = "";
         visited = false;
         description = "";
@@ -87,6 +90,10 @@ public class TrollBridge extends Room
         {
             System.out.print("outsmart[" + this.monster.getName() + "] ");
         }
+        if (hasLoot())
+        {
+            System.out.print("loot[" + this.loot.toString() + "] ");
+        }
         System.out.println();
     }
     
@@ -138,5 +145,10 @@ public class TrollBridge extends Room
     public String getDescription()
     {
         return description;
+    }
+    
+    public void removeLoot()
+    {
+    	loot = null;
     }
 }

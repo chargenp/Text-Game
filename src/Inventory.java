@@ -1,3 +1,4 @@
+package src;
 
 public class Inventory 
 {
@@ -86,20 +87,22 @@ public class Inventory
     public void addItem(String item)
     {
         int i = 0;
+        Item temp = null;
         while (inventory[i] != null && i < size)
         {
             i++;
         }
-        if (i < size)
+        if (i > size)
         {
             System.out.println("Inventory full.");
             return;
         }
         switch (item)
         {
-            case "potion":
+            case "Potion":
+            	temp = new Potion();
         }
-        inventory[i] = item;
+        inventory[i] = temp;
     }
     
     public void equip(Item toEquip)
@@ -107,35 +110,49 @@ public class Inventory
     	int small = -1;
     	for (int i = 0; i < size; i++)
     	{
-    		if (toEquip.toString().equals(inventory[i].toString()))
+    		if(inventory[i] != null)
     		{
-    			if (toEquip instanceof Weapon)
+    			if (toEquip.toString().equals(inventory[i].toString()))
     			{
-    				for (int k = 0; k < EQUIP_SIZE; k++)
+    				if (toEquip instanceof Weapon)
     				{
-    					if (equipped[k] == null)
+    					for (int k = 0; k < EQUIP_SIZE; k++)
     					{
-    						if (small == -1)
+    						if (equipped[k] == null)
     						{
-    							small = k;
+    							if (small == -1)
+    							{
+    								small = k;
+    							}
+    						}
+    						else if (equipped[k] instanceof Weapon)
+    						{
+    							Item temp = equipped[k];
+    							equipped[k] = toEquip;
+    							inventory[i] = null;
+    							addItem(temp);
     						}
     					}
-    					else if (equipped[k] instanceof Weapon)
+    					if (small != -1)
     					{
-    						Item temp = equipped[k];
-    						equipped[k] = toEquip;
+    						equipped[small] = toEquip;
     						inventory[i] = null;
-    						addItem(temp);
+    						return;
     					}
     				}
-    				if (small != -1)
-    				{
-    					equipped[small] = toEquip;
-    					inventory[i] = null;
-    					return;
-    				}
-    			}
-    		}	
+    			}	
+    		}
+    	}
+    }
+    public void equipLoad(Weapon weapon)
+    {
+    	for (int i = 0; i < EQUIP_SIZE; i++)
+    	{
+    		if (equipped[i] == null)
+    		{
+    			equipped[i] = weapon;
+    			return;
+    		}
     	}
     }
     
@@ -177,6 +194,10 @@ public class Inventory
             if (equipped[i] != null)
             {
                 temp += equipped[i] + "\n";
+            }
+            else 
+            {
+            	temp += "x\n";
             }
         }
         return temp;

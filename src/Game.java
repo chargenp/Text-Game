@@ -1,3 +1,4 @@
+package src;
 import java.util.Scanner;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -18,16 +19,21 @@ public class Game
     private Dialog dialog;
     private Scanner input;
     private String inputList;
-    private boolean troll;
 
     public Game() 
     {
-        troll = false;
     	input = new Scanner(System.in);
         map = new Map();
         this.currentRoom = map.getStart();  
         dialog = new Dialog();
         inputList = "";
+    }
+    
+    public Game(Scanner scanner)
+    {
+    	input = scanner;
+        map = new Map();
+        this.currentRoom = map.getStart();  
     }
 
     public String describeCurrentRoom() 
@@ -37,26 +43,10 @@ public class Game
     
     public void RoomEnter(Room next, Game g)
     {
-        if (next == map.getStart())
-        {
-            troll = false;
-        }
-        if (currentRoom instanceof TrollBridge && troll)
-        {
-            System.out.println("\nThe troll wont let you pass!\n");
-            return;
-        }
     	currentRoom = next;
     	g.map.setCurrent(next);
     	System.out.println(currentRoom.getDescription());
     	currentRoom.getIntro();
-    	if (next instanceof TrollBridge)
-    	{
-    	    if (next.getMonster() != null)
-    	    {
-    	        troll = true;
-    	    }
-    	}
     }
 
     public void handleCommand(String command, Hero hero, Game g)
@@ -82,8 +72,7 @@ public class Game
         		BufferedWriter writer = new BufferedWriter(fwrite);
         		BufferedWriter hWriter = new BufferedWriter(hWrite);
         		writer.append(inputList);
-        		String temp = troll + "\n";
-        		temp += hero.getSave();
+        		String temp = hero.getSave();
         		temp += " " + g.map.getCurrent().getMonster();
         		hWrite.append(temp);
         		writer.close();
@@ -123,21 +112,11 @@ public class Game
             				System.out.printf("You recieve %d gold\n", goldIncrease);
             				hero.getInventory().addGold(goldIncrease);
             				System.out.println(currentRoom.getDescription());
-            				Monster tempMonster = g.currentRoom.getMonster();
             				g.currentRoom.monsterDefeated();
-            				if (tempMonster instanceof Troll)
-            				{
-            				        troll = false;
-            				}
             				break;
             			case 2: 
             			    System.out.println(currentRoom.getDescription());
-                            Monster tempMonster1 = g.currentRoom.getMonster();
                             g.currentRoom.monsterDefeated();
-                            if (tempMonster1 instanceof Troll)
-                            {
-                                    troll = false;
-                            }
                             break;            			    
             			default:
             				break;
@@ -169,21 +148,11 @@ public class Game
             				System.out.printf("You recieve %d gold\n", goldIncrease);
             				hero.getInventory().addGold(goldIncrease);
             				System.out.println(currentRoom.getDescription());
-            				Monster tempMonster = g.currentRoom.getMonster();
             				g.currentRoom.monsterDefeated();
-            				if (tempMonster instanceof Troll)
-            				{
-            				        troll = false;
-            				}
             				break;
             			case 2: 
             			    System.out.println(currentRoom.getDescription());
-                            Monster tempMonster2 = g.currentRoom.getMonster();
                             g.currentRoom.monsterDefeated();
-                            if (tempMonster2 instanceof Troll)
-                            {
-                                    troll = false;
-                            }
                             break;
             			default:
             				break;
@@ -219,12 +188,7 @@ public class Game
         				System.out.printf("You recieve %d gold\n", goldIncrease);
         				hero.getInventory().addGold(goldIncrease);
         				System.out.println(currentRoom.getDescription());
-        				Monster tempMonster = g.currentRoom.getMonster();
         				g.currentRoom.monsterDefeated();
-        				if (tempMonster instanceof Troll)
-        				{
-        				        troll = false;
-        				}
         				break;
         			}
         		}
@@ -431,11 +395,6 @@ public class Game
 	            System.out.println("\nType \"help\" anytime for a command list.\n");
 	            ((StartVillage)g.map.getCurrent()).getIntro();
 	            System.out.println(g.dialog.getMother());
-	            String trollTemp = heroLoad.nextLine();
-	            if (trollTemp.equals("false"))
-	            {
-	                g.troll = false;
-	            }
             	hero.setLevel(heroLoad.nextInt());
             	hero.setExperience(heroLoad.nextInt());
             	hero.setStrength(heroLoad.nextInt());
@@ -450,16 +409,28 @@ public class Game
             	for (int i = 0; i < tempSize; i++)
             	{
             	    String tempWeapon = heroLoad.next();
+            	    tempWeapon = tempWeapon.trim();
             	    if (!tempWeapon.equals("x"))
             	    {
             	        hero.getInventory().addItem(tempWeapon);
             	    }
             	}
-            	
-                   
-            	hero.loadCreateWeapon(tempWeapon);
+            	heroLoad.nextLine();
+            	for (int i = 0; i < 4; i++)
+            	{
+            		String tempWeapon = heroLoad.nextLine();
+            		tempWeapon = tempWeapon.trim();
+            		hero.loadCreateWeapon(tempWeapon);
+            	}
             	String temp = heroLoad.next();
-                //fuck me load the loop from git;
+            	while (load.hasNext())
+              	{
+  	                System.out.print("command > ");
+  	                System.out.flush();
+              		String command = load.next();
+              		System.out.println(command);
+              		handleCommand(command, hero, g);
+              	}
             	load.close();
             	if (temp.equals("null"))
             	{

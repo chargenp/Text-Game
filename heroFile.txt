@@ -1,9 +1,11 @@
-false 
 1 30 10 9 14 11 15 190 190 100 5
 Potion
-Potion 
-x 
-x 
-x 
-Sword  
+Potion
+x
+x
+x
+Sword
+x
+x
+x
 Treant@75b84c92

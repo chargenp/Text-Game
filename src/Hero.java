@@ -1,3 +1,4 @@
+package src;
 
 
 public class Hero
@@ -16,6 +17,7 @@ public class Hero
     private Weapon weapon;
     private int experience;
     private int maxHealth;
+    private String description;
     
     public Hero(String name, String build, String gender)
     {
@@ -63,6 +65,8 @@ public class Hero
         	intelligence += 2;
         	charisma += 2;
         }
+        description = String.format("You are a young farm-%s of nondescript features "
+        		+ "and easily blend into a crowd", gender);
         
     }
     
@@ -80,9 +84,9 @@ public class Hero
     	return weapon.damage(strength, agility);
     }
     
-    public void getDescription()
+    public String getDescription()
     {
-    	System.out.println("You are a farmboy.");
+    	return description;
     }
     
     public void setMana(int mana)
@@ -207,8 +211,9 @@ public class Hero
         if (weapon.equalsIgnoreCase("sword"))
         {
             this.weapon = new Shoddy_Sword();
-            inventory.equip(this.weapon);
+            inventory.equipLoad(this.weapon);
         }
+        
     }
     
     public void equip(Game g)
