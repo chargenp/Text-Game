@@ -14,7 +14,6 @@ public class TrollBridge extends Room
     
     public TrollBridge()
     {   
-    	loot = new Potion();
         flavorText = "";
         visited = false;
         description = "";
@@ -48,6 +47,8 @@ public class TrollBridge extends Room
     {
         this.monster = monster;
         this.description = description;
+        this.loot = new Potion();
+        visited = false;
     }
     
     public boolean hasMonster()
@@ -145,6 +146,11 @@ public class TrollBridge extends Room
     public String getDescription()
     {
         return description;
+    }
+    @Override
+    public boolean hasLoot()
+    {
+        return this.loot != null;
     }
     
     public void removeLoot()

@@ -35,6 +35,11 @@ public class Game
         map = new Map();
         this.currentRoom = map.getStart();  
     }
+    
+    public void setScanner(Scanner scan)
+    {
+        this.input = scan;
+    }
 
     public String describeCurrentRoom() 
     {
@@ -219,7 +224,7 @@ public class Game
     			}
         		break;
         	case "self":
-        		hero.getDescription();
+        		System.out.println(hero.getDescription());
         		break;
         	case "bed":
         		if (getCurrentRoom() instanceof StartVillage);
@@ -357,7 +362,7 @@ public class Game
             Hero hero = new Hero(nameTemp, typeTemp, gender); 
             System.out.println("\nType \"help\" anytime for a command list.\n");
             ((StartVillage)g.map.getCurrent()).getIntro();
-            System.out.println(g.dialog.getMother());
+            System.out.println(this.dialog.getMother());
             inputList += gender + " " + nameTemp + " " + typeTemp + " ";
             prompt();
             while (playing) 

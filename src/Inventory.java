@@ -72,11 +72,15 @@ public class Inventory
     public void addItem(Item item)
     {
     	int i = 0;
-    	while (inventory[i] != null && i < size)
+    	while (i < size)
     	{
+    	    if (inventory[i] == null)
+    	    {
+    	        break;
+    	    }
     		i++;
     	}
-    	if (i < size)
+    	if (i >= size)
     	{
     	    System.out.println("Inventory full.");
     	    return;
