@@ -17,6 +17,10 @@ public class Warlock extends Monster
 		health = (600 + (150 * this.level)); 
 		maxHealth = health;
 	}
+	public Weapon getWeapon()
+    {
+        return weapon;
+    }
 	public void resetHealth()
 	{
 		health = maxHealth;

@@ -17,6 +17,10 @@ public class Treant extends Monster
 		health = (300 + (350 * this.level)); 
 		maxHealth = health;
 	}
+	public Weapon getWeapon()
+    {
+        return weapon;
+    }
 	public void resetHealth()
 	{
 		health = maxHealth;

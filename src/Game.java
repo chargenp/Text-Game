@@ -33,8 +33,35 @@ public class Game
 	{
 		input = scanner;
 		map = new Map();
+		dialog = new Dialog();
 		this.currentRoom = map.getStart();  
 	}
+	   
+    public Game(Hero hero, Scanner scan)
+    {
+        input = scan;
+        map = new Map();
+        currentRoom = map.getStart();
+        dialog = new Dialog();
+    }
+
+    public void gameWithHero(Hero hero, Game g)
+    {
+        System.out.println("It’s been years since there has been any adventure in the small town of "
+            + "\nPurdue. Long days and quiet nights, the same routine day in and day out. It is just a "
+            + "\nsimple mother and her child on their farm trying to make due. This is where our story begins….\n");
+
+        System.out.println("\nType \"help\" anytime for a command list.\n");
+        ((StartVillage)g.map.getCurrent()).getIntro();
+        System.out.println(getDialog().getMother());
+        while (playing) 
+        {
+            prompt();  
+            String command = input.nextLine();
+            command.trim();
+            handleCommand(command, hero, g);                     
+        }
+    }
 
 	public void setScanner(Scanner scan)
 	{
@@ -217,6 +244,7 @@ public class Game
 					{
 						System.out.println("You saved the kingdom! You Won!");
 						handleCommand("quit", hero, g);
+						break;
 					}
 					int goldIncrease = (100 + (100 * g.currentRoom.getMonster().getLevel()));
 					System.out.printf("You recieve %d gold\n", goldIncrease);
@@ -279,7 +307,6 @@ public class Game
 			break;
 		case "quit":
 			playing = false;
-			System.exit(0);
 			break;
 		case "help" :
 			handleHelp();
@@ -394,16 +421,21 @@ public class Game
 		Hero hero = new Hero(nameTemp, typeTemp, gender); 
 		System.out.println("\nType \"help\" anytime for a command list.\n");
 		((StartVillage)g.map.getCurrent()).getIntro();
-		System.out.println(this.dialog.getMother());
+		System.out.println(getDialog().getMother());
 		inputList += gender + " " + nameTemp + " " + typeTemp + " ";
-		prompt();
 		while (playing) 
 		{
+		    prompt();  
 			String command = input.nextLine();
 			command.trim();
-			handleCommand(command, hero, g);
-			prompt();               
+			handleCommand(command, hero, g);		             
 		}
+		System.exit(0);
+	}
+	
+	public Dialog getDialog()
+	{
+	    return this.dialog;
 	}
 
 	public void loadGame(Game g)
@@ -483,12 +515,12 @@ public class Game
 				g.map.monsterLoad();
 			}
 			heroLoad.close();
-			prompt();
 			while (playing) 
-			{            	
+			{       
+			    prompt();
 				String command = input.nextLine();
 				handleCommand(command, hero, g);
-				prompt();
+				
 			}
 		}
 		catch (FileNotFoundException ex)
@@ -496,6 +528,7 @@ public class Game
 			System.out.println("No save file found. Starting new game\n");
 			newGame(g);
 		}
+		System.exit(0);
 	}
 
 	public static void main(String[] args)
@@ -516,6 +549,7 @@ public class Game
 			}
 			if (startStatus.equalsIgnoreCase("load"));
 			{
+			    start = false;
 				g.loadGame(g);
 			}
 		}

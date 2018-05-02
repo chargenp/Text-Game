@@ -8,6 +8,7 @@ public class Kraken extends Monster
 	private int level;	
 	private int agility;
 	private int strength;
+	private Weapon weapon;
 
 	public Kraken(int level)
 	{
@@ -17,6 +18,12 @@ public class Kraken extends Monster
 		health = (300 + (100 * this.level)); 
 		maxHealth = health;
 	}
+	
+	public Weapon getWeapon()
+	{
+	    return weapon;
+	}
+	
 	public void resetHealth()
 	{
 		health = maxHealth;

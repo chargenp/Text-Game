@@ -18,4 +18,5 @@ public abstract class Monster
 	public abstract int getLevel();
 	public abstract int experienceReward();
 	public abstract void resetHealth();
+	public abstract Weapon getWeapon();
 }

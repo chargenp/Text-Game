@@ -48,6 +48,11 @@ public class EvilKingdom extends Room
 	{
 		return this.monster != null;
 	}
+	
+	public void monsterDefeated()
+	{
+	    monster = null;
+	}
 
 	@Override
 	public void getExits()

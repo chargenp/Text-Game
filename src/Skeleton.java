@@ -19,6 +19,10 @@ public class Skeleton extends Monster
 		maxHealth = health;
 		this.weapon = new Shoddy_Sword();
 	}
+	public Weapon getWeapon()
+    {
+        return weapon;
+    }
 	public void resetHealth()
 	{
 		health = maxHealth;

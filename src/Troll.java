@@ -19,6 +19,10 @@ public class Troll extends Monster
 		maxHealth = health;
 		this.weapon = new Club();
 	}
+	public Weapon getWeapon()
+    {
+        return weapon;
+    }
 	public void resetHealth()
 	{
 		this.health = maxHealth;

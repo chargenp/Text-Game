@@ -17,6 +17,10 @@ public class Spider extends Monster
 		health = (150 + (50 * this.level)); 
 		maxHealth = health;
 	}
+	public Weapon getWeapon()
+    {
+        return weapon;
+    }
 	public void resetHealth()
 	{
 		health = maxHealth;

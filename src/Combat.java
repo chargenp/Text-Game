@@ -31,6 +31,11 @@ public class Combat
 		inCombat = true;
 
 	}
+	
+	public Stack<String> getActions()
+	{
+	    return actions;
+	}
 
 	public int smart()
 	{

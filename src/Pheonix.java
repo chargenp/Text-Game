@@ -8,6 +8,7 @@ public class Pheonix extends Monster
 	private int level;	
 	private int agility;
 	private int strength;
+	private Weapon weapon;
 
 	public Pheonix(int level)
 	{
@@ -16,6 +17,10 @@ public class Pheonix extends Monster
 		this.level = level;
 		health = (500 + (125 * this.level)); 
 		maxHealth = health;
+	}
+	public Weapon getWeapon()
+	{
+	    return weapon;
 	}
 	public void resetHealth()
 	{
