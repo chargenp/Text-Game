@@ -1,29 +1,28 @@
 package src;
 
-public class StartVillage extends Room
+public class Kingdom extends Room
 {
-    public boolean visited;
+public boolean visited;
     
-	public StartVillage()
+	public Kingdom()
 	{
-		super();
+		
 	}
 	
 	public void getIntro()
 	{   
 	    if (!visited)
 	    {
-	        System.out.println("After completing your morning chores on the farm, you head inside to see"
-	            + "\nyour mother, who is just finishing breakfast.\n");
+	        System.out.println("The great kingdom of the land.\n");
 	    }
 	    visited = true;
 	}
 	
 	public String getDescription()
 	{
-	    return "Your farm at the village you grew up around.";
+	    return "The great capital of the Realm.";
 	}
-
+	
 	@Override
 	public void getExits()
 	{
@@ -43,7 +42,7 @@ public class StartVillage extends Room
 		{
 			System.out.print("West ");
 		}
-		System.out.println("Blacksmith Bed Mother");
+		System.out.println("Blacksmith");
 		System.out.println();
 	}
 }

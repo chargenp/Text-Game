@@ -16,7 +16,21 @@ public class Room
     
     public Room()
     {   
-        Random rng = new Random();
+        flavorText = "";
+        visited = false;
+        description = "";
+    }
+    
+    public Room(String description)
+    {
+    	this.description = description;
+    }
+    
+    public Room(Monster monster, String description)
+    {
+    	this.monster = monster;
+    	this.description = description;
+    	Random rng = new Random();
         items = new Consumable[2];
         items[0] = new Potion();
         items[1] = new Potion();
@@ -24,9 +38,6 @@ public class Room
         {
             loot = items[rng.nextInt(1)];
         }
-        flavorText = "";
-        visited = false;
-        description = "";
     }
     
     public boolean hasLoot()
@@ -34,19 +45,19 @@ public class Room
         return loot != null;
     }
     
+    public void setLoot(Consumable loot)
+    {
+    	this.loot = loot;
+    }
+    
     public Consumable getLoot()
     {
-        if (loot != null)
-        {
-            Consumable temp = loot;
-            loot = null;
-            return temp;
-        }
-        else
-        {
-            return null;
-        }
-        
+    	return loot;
+    }
+    
+    public void obtainLoot()
+    {	
+    	loot = null;     
     }
     
     public void setFlavorText(String text)
@@ -65,25 +76,6 @@ public class Room
         {
             visited = true;
             System.out.println(flavorText);
-        }
-    }
-    
-    public Room(String description)
-    {
-    	this.description = description;
-    }
-    
-    public Room(Monster monster, String description)
-    {
-    	this.monster = monster;
-    	this.description = description;
-    	Random rng = new Random();
-        items = new Consumable[2];
-        items[0] = new Potion();
-        items[1] = new Potion();
-        if (rng.nextInt(100) < 100)
-        {
-            loot = items[rng.nextInt(1)];
         }
     }
     

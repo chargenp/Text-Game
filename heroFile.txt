@@ -1,4 +1,4 @@
-1 30 10 9 14 11 15 190 190 100 5
+9 635 14 14 35 9 11 320 470 3500 5
 Potion
 Potion
 x
@@ -8,4 +8,4 @@ Sword
 x
 x
 x
-Treant@75b84c92
+ src.Warlock@232204a1

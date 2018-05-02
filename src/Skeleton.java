@@ -15,7 +15,7 @@ public class Skeleton extends Monster
 		agility = (6 + (3 * level));
 		strength = (5 + (2 * level));
 		this.level = level;
-		health = (100 + (125 * this.level)); 
+		health = (100 + (40 * this.level)); 
 		maxHealth = health;
 		this.weapon = new Shoddy_Sword();
 	}

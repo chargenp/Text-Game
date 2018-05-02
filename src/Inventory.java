@@ -47,29 +47,36 @@ public class Inventory
 	
 	public Consumable getItem(String itemName)
 	{
-	    for (int i = 0; i < size; i++)
-        {
-            if (inventory[i].toString().equalsIgnoreCase(itemName))
-            {
-                Consumable temp = ((Consumable)inventory[i]);
-                return temp;
-            }
-        }
-	    return null;
+		for (int i = 0; i < size; i++)
+		{
+			if (inventory[i] != null)
+			{
+				if (inventory[i].toString().equalsIgnoreCase(itemName))
+				{
+					Consumable temp = ((Consumable)inventory[i]);
+					return temp;
+				}
+			}
+		}
+		return null;
 	}
 	
 	public void consumeItem(String itemName)
 	{
-	    for (int i = 0; i < size; i++)
-	    {
-	        if (inventory[i].toString().equalsIgnoreCase(itemName))
-	        {
-	            inventory[i] = null;
-	        }
-	    }
+		for (int i = 0; i < size; i++)
+		{
+			if (inventory[i] != null)
+			{
+				if (inventory[i].toString().equalsIgnoreCase(itemName))
+				{
+					inventory[i] = null;
+					break;
+				}
+			}
+		}
 	}
 
-    public void addItem(Item item)
+    public boolean addItem(Item item)
     {
     	int i = 0;
     	while (i < size)
@@ -83,9 +90,10 @@ public class Inventory
     	if (i >= size)
     	{
     	    System.out.println("Inventory full.");
-    	    return;
+    	    return false;
     	}
     	inventory[i] = item;
+    	return true;
     }
     
     public void addItem(String item)
@@ -250,7 +258,7 @@ public class Inventory
     	{
     		if (equipped[i] != null)
     		{
-    			System.out.print(equipped[i].getName() + " ");			
+    			System.out.print("[" + equipped[i].getName() + "] ");			
     		}
     		else
     		{

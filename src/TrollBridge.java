@@ -10,7 +10,6 @@ public class TrollBridge extends Room
     private Monster monster;
     private boolean visited;
     private String flavorText;
-    private Consumable loot;
     
     public TrollBridge()
     {   
@@ -47,7 +46,7 @@ public class TrollBridge extends Room
     {
         this.monster = monster;
         this.description = description;
-        this.loot = new Potion();
+        setLoot(new Potion());
         visited = false;
     }
     
@@ -93,7 +92,7 @@ public class TrollBridge extends Room
         }
         if (hasLoot())
         {
-            System.out.print("loot[" + this.loot.toString() + "] ");
+            System.out.print("loot[" + getLoot().toString() + "] ");
         }
         System.out.println();
     }
@@ -147,14 +146,9 @@ public class TrollBridge extends Room
     {
         return description;
     }
-    @Override
-    public boolean hasLoot()
-    {
-        return this.loot != null;
-    }
     
     public void removeLoot()
     {
-    	loot = null;
+    	setLoot(null);
     }
 }

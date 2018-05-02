@@ -48,7 +48,7 @@ public class Hero
             charisma = 9;
             vitality = 12;
         }
-        health = 100 + vitality * 10;
+        health = (level * 20) + 100 + vitality * 15;
         maxHealth = health;
         mana = intelligence * 10;
         level = 0;
@@ -161,8 +161,8 @@ public class Hero
     public void increaseVitality(int increase)
     {
         this.vitality += increase;
-        maxHealth = 100 + this.vitality * 10;
-        health += 10 * increase;
+        maxHealth = (level * 20) + 100 + vitality * 15;
+        health = maxHealth;
     }
     
     public int getCharisma()

@@ -1,20 +1,20 @@
 package src;
 
-public class Treant extends Monster
+public class Warlock extends Monster
 {
-	private final String name = "Treant";
+	private final String name = "Warlock";
 	private int health;
 	private int maxHealth;
 	private int level;	
 	private int agility;
 	private int strength;
 
-	public Treant(int level)
+	public Warlock(int level)
 	{
-		agility = (4 + (1 * level));
-		strength = (16 + (4 * level));
+		agility = (16 + (2 * level));
+		strength = (24 + (3 * level));
 		this.level = level;
-		health = (300 + (350 * this.level)); 
+		health = (600 + (150 * this.level)); 
 		maxHealth = health;
 	}
 	public void resetHealth()
@@ -35,7 +35,7 @@ public class Treant extends Monster
 	}
 	public int attack()
 	{
-		return ((int)((10 + (strength * 1.5)) * 1.3));
+		return ((int)((10 + (agility * 1.5)) + (strength * 2)));
 	}
 	public void setHealth(int health)
 	{
@@ -47,6 +47,6 @@ public class Treant extends Monster
 	}
 	public int experienceReward()
 	{
-		return (40 + (50 * level));
+		return 1;
 	}
 }
